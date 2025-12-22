@@ -1,0 +1,33 @@
+{
+    "name": "corrivate/magento2-composer-dashboard",
+    "description": "View composer issues inside the Magento admin panel, useful for PMs etc.",
+    "type": "magento2-module",
+    "licence": "MIT",
+    "authors": [
+        {
+            "name": "Lau Bannenberg",
+            "email": "lau.bannenberg@gmail.com"
+        }
+    ],
+    "version": "0.1.0",
+    "require": {
+
+    },
+    "require-dev": {
+        "bitexpert/phpstan-magento": "^0.30.1",
+        "phpstan/extension-installer": "^1.3",
+        "phpstan/phpstan": "^1.9"
+    },
+    "autoload": {
+        "files": [
+            "src/registration.php"
+        ],
+        "psr-4": {
+            "Corrivate\\ComposerDashboard\\": "src/"
+        },
+        "autoload-dev": {
+            "psr-4": {
+                "Corrivate\\ComposerDashboard\\": "tests/"}
+        }
+    }
+}
