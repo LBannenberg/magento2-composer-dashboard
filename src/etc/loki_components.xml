@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<components xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Yireo_LokiComponents:etc/loki_components.xsd">
+    <component
+        name="corrivate.composer-dashboard.audit.grid"
+        viewModel="Loki\AdminComponents\Component\Grid\GridViewModel"
+        repository="Loki\AdminComponents\Component\Grid\GridRepository">
+    </component>
+</components>

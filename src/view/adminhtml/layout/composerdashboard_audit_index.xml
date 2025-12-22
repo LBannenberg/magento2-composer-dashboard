@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:View/Layout:etc/page_configuration.xsd">
+    <update handle="loki_admin_components_grid"/>
+
+    <body>
+        <referenceContainer name="content">
+            <block
+                name="corrivate.composer-dashboard.audit.grid"
+                template="Loki_AdminComponents::grid.phtml">
+                <arguments>
+                    <argument name="provider" xsi:type="string">\Corrivate\ComposerDashboard\Provider\AuditArrayProvider</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

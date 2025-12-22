@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Corrivate::composer_dashboard"
+             title="Corrivate"
+             module="Corrivate_ComposerDashboard"
+             sortOrder="9999"
+             parent="Magento_Backend::system"
+             resource="Corrivate_ComposerDashboard::composerdashboard"/>
+
+        <add id="Corrivate_ComposerDashboard::audit_index"
+             title="Audit"
+             module="Corrivate_ComposerDashboard"
+             sortOrder="9999"
+             resource="Corrivate_ComposerDashboard::composerdashboard"
+             parent="Corrivate::composer_dashboard"
+             action="composerdashboard/audit/index"/>
+    </menu>
+</config>
