@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Cache/etc/cache.xsd">
+    <type name="corrivate_composerdashboard"
+          translate="label,description"
+          instance="\Corrivate\ComposerDashboard\Model\Cache\ComposerCache">
+        <label>Corrivate Composer Dashboard</label>
+        <description>Package status fetched from Packagist etc.</description>
+    </type>
+</config>

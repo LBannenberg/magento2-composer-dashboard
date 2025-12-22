@@ -2,12 +2,14 @@
 
 namespace Corrivate\ComposerDashboard\Provider;
 
+use Corrivate\ComposerDashboard\Model\Composer\Audit;
 use Loki\AdminComponents\Grid\Column\ColumnFactory;
 
 class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProviderInterface
 {
     public function __construct(
-        private readonly ColumnFactory $columnFactory
+        private readonly ColumnFactory $columnFactory,
+        private readonly Audit $audit
     ){}
 
     public function getColumns(): array
@@ -20,11 +22,6 @@ class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvider
 
     public function getData(): array
     {
-        $rows = [];
-        $rows[] = [
-            'package_name' => 'foo/bar',
-            'issues' => 'lame package'
-        ];
-        return $rows;
+        return $this->audit->getRows();
     }
 }
