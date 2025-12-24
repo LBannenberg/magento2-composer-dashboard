@@ -11,7 +11,8 @@ class OutdatedArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvi
     public function __construct(
         private readonly ColumnFactory $columnFactory,
         private readonly Outdated      $outdated
-    ) {
+    )
+    {
     }
 
     public function getColumns(): array
@@ -21,8 +22,16 @@ class OutdatedArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvi
             $this->columnFactory->create(['code' => 'version', 'label' => 'Current Version']),
             $this->columnFactory->create(['code' => 'release_age', 'label' => 'Age']),
             $this->columnFactory->create(['code' => 'latest', 'label' => 'Latest Version']),
-            $this->columnFactory->create(['code' => 'latest_status', 'label' => 'Upgrade status']),
-            $this->columnFactory->create(['code' => 'abandoned', 'label' => 'Abandoned?']),
+            $this->columnFactory->create([
+                'code' => 'latest_status',
+                'label' => 'Upgrade status',
+                'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/semver-status.phtml'
+            ]),
+            $this->columnFactory->create([
+                'code' => 'abandoned',
+                'label' => 'Abandoned?',
+                'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/abandoned.phtml'
+            ]),
             $this->columnFactory->create(['code' => 'description', 'label' => 'Description']),
         ];
     }
@@ -31,7 +40,7 @@ class OutdatedArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvi
     {
         $rows = $this->outdated->getRows();
         return array_map(
-            fn (OutdatedPackage $row) => (array)$row,
+            fn(OutdatedPackage $row) => (array)$row,
             $rows
         );
     }

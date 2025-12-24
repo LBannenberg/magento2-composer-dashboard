@@ -2,13 +2,13 @@
 <components xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Yireo_LokiComponents:etc/loki_components.xsd">
     <component
         name="corrivate.composer-dashboard.audit.grid"
-        viewModel="Corrivate\ComposerDashboard\ViewModel\AuditGridViewModel"
+        viewModel="Loki\AdminComponents\Component\Grid\GridViewModel"
         repository="Loki\AdminComponents\Component\Grid\GridRepository">
     </component>
 
     <component
         name="corrivate.composer-dashboard.outdated.grid"
-        viewModel="Corrivate\ComposerDashboard\ViewModel\OutdatedGridViewModel"
+        viewModel="Loki\AdminComponents\Component\Grid\GridViewModel"
         repository="Loki\AdminComponents\Component\Grid\GridRepository">
     </component>
 </components>

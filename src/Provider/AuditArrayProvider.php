@@ -11,17 +11,26 @@ class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvider
     public function __construct(
         private readonly ColumnFactory $columnFactory,
         private readonly Audit $audit
-    ){}
+    ) {
+    }
 
     public function getColumns(): array
     {
         return [
             $this->columnFactory->create(['code' => 'package', 'label' => 'Package']),
-            $this->columnFactory->create(['code' => 'severity', 'label' => 'Severity']),
+            $this->columnFactory->create([
+                'code' => 'severity',
+                'label' => 'Severity',
+                'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/cve-severity.phtml'
+            ]),
             $this->columnFactory->create(['code' => 'cve', 'label' => 'CVE']),
             $this->columnFactory->create(['code' => 'reported', 'label' => 'Reported At']),
             $this->columnFactory->create(['code' => 'title', 'label' => 'Issue']),
-            $this->columnFactory->create(['code' => 'link', 'label' => 'Details']),
+            $this->columnFactory->create([
+                'code' => 'link',
+                'label' => 'Details',
+                'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/external-link.phtml'
+            ]),
         ];
     }
 
@@ -29,7 +38,7 @@ class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvider
     {
         $rows =  $this->audit->getRows();
         return array_map(
-            fn(AuditIssue $row) => (array)$row,
+            fn (AuditIssue $row) => (array)$row,
             $rows
         );
     }
