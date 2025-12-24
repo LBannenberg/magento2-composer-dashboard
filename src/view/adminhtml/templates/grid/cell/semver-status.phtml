@@ -9,9 +9,9 @@ use Magento\Framework\Escaper;
 
 
 $class = match($block->getValue()) {
-    'medium' => 'composer-badge--warning',
-    'high' => 'composer-badge--danger',
-    default => ''
+    'semver-safe-update' => 'composer-badge--ok',
+    'update-possible' => 'composer-badge--warning',
+    default => 'composer-badge--danger'
 };
 ?>
 

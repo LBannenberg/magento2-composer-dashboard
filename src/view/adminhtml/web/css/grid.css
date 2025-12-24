@@ -1,5 +1,5 @@
-.composer-audit-severity-medium,
-.composer-audit-severity-high {
+/* Base styles for all badges */
+.composer-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -7,18 +7,21 @@
     border-radius: 0.25rem;
     text-transform: uppercase;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+    font-size: 1rem;
 }
 
-.composer-audit-severity-medium {
+.composer-badge--ok {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.composer-badge--warning {
     background-color: #ffc107;
     color: #212529;
-    font-size: 1.25rem;
-    font-weight: 600;
 }
 
-.composer-audit-severity-high {
+.composer-badge--danger {
     background-color: #e03131;
     color: #ffffff;
-    font-size: 1.5rem;
-    font-weight: 800;
 }

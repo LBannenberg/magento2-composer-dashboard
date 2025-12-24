@@ -11,6 +11,8 @@ class OutdatedGridViewModel extends \Loki\AdminComponents\Component\Grid\GridVie
     {
         return [
             ...parent::getCellTemplates(),
+            'abandoned' => 'Corrivate_ComposerDashboard::grid/cell/abandoned.phtml',
+            'latest_status' => 'Corrivate_ComposerDashboard::grid/cell/semver-status.phtml'
         ];
     }
 }

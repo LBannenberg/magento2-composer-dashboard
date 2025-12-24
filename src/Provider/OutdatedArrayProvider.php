@@ -18,6 +18,12 @@ class OutdatedArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvi
     {
         return [
             $this->columnFactory->create(['code' => 'package', 'label' => 'Package']),
+            $this->columnFactory->create(['code' => 'version', 'label' => 'Current Version']),
+            $this->columnFactory->create(['code' => 'release_age', 'label' => 'Age']),
+            $this->columnFactory->create(['code' => 'latest', 'label' => 'Latest Version']),
+            $this->columnFactory->create(['code' => 'latest_status', 'label' => 'Upgrade status']),
+            $this->columnFactory->create(['code' => 'abandoned', 'label' => 'Abandoned?']),
+            $this->columnFactory->create(['code' => 'description', 'label' => 'Description']),
         ];
     }
 
