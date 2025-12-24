@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="Corrivate::composer_dashboard"
-             title="Corrivate"
+             title="Composer Dashboard"
              module="Corrivate_ComposerDashboard"
              sortOrder="9999"
              parent="Magento_Backend::system"

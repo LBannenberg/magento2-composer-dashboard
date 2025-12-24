@@ -18,6 +18,7 @@ class Index implements HttpGetActionInterface
     {
         $title = 'Composer > Security Audit';
         $resultPage = $this->resultPageFactory->create();
+        $resultPage->setActiveMenu('Magento_Backend::system');
         $resultPage->addBreadcrumb(__($title), __($title));
         $resultPage->getConfig()->getTitle()->prepend(__($title));
         return $resultPage;
