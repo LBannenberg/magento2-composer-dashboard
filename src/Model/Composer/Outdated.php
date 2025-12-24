@@ -96,4 +96,16 @@ class Outdated
         $data['latest_status'] = 'update-possible';
         return new OutdatedPackage(...$data);
     }
+
+    public function getNeededMagentoPatch(): ?string
+    {
+        foreach($this->getRows() as $outdated) {
+            if ($outdated->package !== 'magento/product-community-edition') {
+                continue;
+            }
+
+
+        }
+        return null;
+    }
 }
