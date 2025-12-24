@@ -8,6 +8,7 @@
                 name="corrivate.composer-dashboard.audit.grid"
                 template="Loki_AdminComponents::grid.phtml">
                 <arguments>
+                    <argument name="hide_actions" xsi:type="boolean">true</argument>
                     <argument name="provider" xsi:type="string">\Corrivate\ComposerDashboard\Provider\AuditArrayProvider</argument>
                 </arguments>
             </block>
