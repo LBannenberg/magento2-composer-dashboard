@@ -1,0 +1,11 @@
+<?php
+declare(strict_types=1);
+
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\Escaper;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+?>
+
+<a href="<?= $escaper->escapeUrl($block->getValue())?>" target="_blank"><?= $escaper->escapeHtml($block->getValue())?></a>

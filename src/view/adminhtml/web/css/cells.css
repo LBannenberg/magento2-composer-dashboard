@@ -1,0 +1,24 @@
+.composer-audit-severity-medium,
+.composer-audit-severity-high {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.composer-audit-severity-medium {
+    background-color: #ffc107; /* Brighter yellow for better contrast */
+    color: #212529;            /* Dark text for readability */
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.composer-audit-severity-high {
+    background-color: #e03131; /* Vibrant red for urgency */
+    color: #ffffff;            /* White text for readability */
+    font-size: 1.5rem;
+    font-weight: 800;
+}

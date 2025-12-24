@@ -2,6 +2,10 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:View/Layout:etc/page_configuration.xsd">
     <update handle="loki_admin_components_grid"/>
 
+    <head>
+        <css src="Corrivate_ComposerDashboard/css/cells.css"/>
+    </head>
+
     <body>
         <referenceContainer name="content">
             <block
