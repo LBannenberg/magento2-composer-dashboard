@@ -3,22 +3,17 @@
 namespace Corrivate\ComposerDashboard\Model\Composer;
 
 use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
+use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
 use Magento\Framework\Serialize\SerializerInterface;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class Audit
 {
-    private const CACHE_KEY = ComposerCache::TYPE_IDENTIFIER . '_AUDIT';
-    private const TTL = 60 * 60 * 24;
-
     public function __construct(
         private readonly ComposerCache       $cache,
         private readonly SerializerInterface $serializer
-    )
-    {
+    ) {
     }
-
 
     public function getRows(): array
     {
@@ -26,24 +21,20 @@ class Audit
         // and we need these rows probably at least several times in a row,
         // so we should use caching.
 
-        $cached = $this->cache->load(self::CACHE_KEY);
+        $issues = $this->cache->loadIssues();
 
-        if ($cached !== false) {
-            return $this->serializer->unserialize($cached);
+        if($issues === null) {
+            $issues = $this->getFreshAudit();
+            $this->cache->saveIssues($issues);
         }
 
-        $fresh = $this->getFreshAudit();
-
-        $this->cache->save(
-            $this->serializer->serialize($fresh),
-            self::CACHE_KEY,
-            [ComposerCache::CACHE_TAG],
-            self::TTL
-        );
-
-        return $fresh;
+        return $issues;
     }
 
+    /**
+     * @return AuditIssue[]
+     * @throws \Exception
+     */
     private function getFreshAudit(): array
     {
         $command = 'vendor/bin/composer audit --format=json --abandoned=ignore';
@@ -55,17 +46,22 @@ class Audit
 
         $process->run();
 
-
         $output = $process->getOutput();
         $json = json_decode($output, true);
         $advisories = $json['advisories'] ?? [];
 
         $rows = [];
         foreach ($advisories as $package => $issues) {
-            $rows[] = [
-                'package_name' => $package,
-                'issues' => 'cached at ' . (new \DateTime())->format('Y-m-d H:i:s')
-            ];
+            foreach ($issues as $issue) {
+                $rows[] = new AuditIssue(
+                    package: $package,
+                    title: $issue['title'],
+                    cve: $issue['cve'],
+                    link: $issue['link'],
+                    severity: $issue['severity'],
+                    reported: (new \DateTime($issue['reportedAt']))->format('Y-m-d H:i:s')
+                );
+            }
         }
         return $rows;
     }

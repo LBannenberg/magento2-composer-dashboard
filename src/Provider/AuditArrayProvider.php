@@ -3,6 +3,7 @@
 namespace Corrivate\ComposerDashboard\Provider;
 
 use Corrivate\ComposerDashboard\Model\Composer\Audit;
+use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
 use Loki\AdminComponents\Grid\Column\ColumnFactory;
 
 class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProviderInterface
@@ -15,13 +16,21 @@ class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvider
     public function getColumns(): array
     {
         return [
-            $this->columnFactory->create(['code' => 'package_name', 'label' => 'Package']),
-            $this->columnFactory->create(['code' => 'issues', 'label' => 'Issues']),
+            $this->columnFactory->create(['code' => 'package', 'label' => 'Package']),
+            $this->columnFactory->create(['code' => 'severity', 'label' => 'Severity']),
+            $this->columnFactory->create(['code' => 'cve', 'label' => 'CVE']),
+            $this->columnFactory->create(['code' => 'reported', 'label' => 'Reported At']),
+            $this->columnFactory->create(['code' => 'title', 'label' => 'Issue']),
+            $this->columnFactory->create(['code' => 'link', 'label' => 'Details']),
         ];
     }
 
     public function getData(): array
     {
-        return $this->audit->getRows();
+        $rows =  $this->audit->getRows();
+        return array_map(
+            fn(AuditIssue $row) => (array)$row,
+            $rows
+        );
     }
 }
