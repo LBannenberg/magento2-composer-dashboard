@@ -16,7 +16,7 @@ class Index implements HttpGetActionInterface
 
     public function execute(): ResultInterface
     {
-        $title = 'Composer Audit';
+        $title = 'Composer > Security Audit';
         $resultPage = $this->resultPageFactory->create();
         $resultPage->addBreadcrumb(__($title), __($title));
         $resultPage->getConfig()->getTitle()->prepend(__($title));

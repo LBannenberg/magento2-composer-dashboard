@@ -3,7 +3,7 @@
     <update handle="loki_admin_components_grid"/>
 
     <head>
-        <css src="Corrivate_ComposerDashboard/css/cells.css"/>
+        <css src="Corrivate_ComposerDashboard/css/grid.css"/>
     </head>
 
     <body>

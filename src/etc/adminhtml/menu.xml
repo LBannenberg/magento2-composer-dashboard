@@ -10,9 +10,9 @@
              resource="Corrivate_ComposerDashboard::composerdashboard"/>
 
         <add id="Corrivate_ComposerDashboard::audit_index"
-             title="Audit"
+             title="Security Audit"
              module="Corrivate_ComposerDashboard"
-             sortOrder="9999"
+             sortOrder="10"
              resource="Corrivate_ComposerDashboard::composerdashboard"
              parent="Corrivate::composer_dashboard"
              action="composerdashboard/audit/index"/>

@@ -4,15 +4,14 @@ namespace Corrivate\ComposerDashboard\Model\Composer;
 
 use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
-use Magento\Framework\Serialize\SerializerInterface;
 use Symfony\Component\Process\Process;
 
 class Audit
 {
     public function __construct(
-        private readonly ComposerCache       $cache,
-        private readonly SerializerInterface $serializer
-    ) {
+        private readonly ComposerCache $cache
+    )
+    {
     }
 
     public function getRows(): array
@@ -23,8 +22,8 @@ class Audit
 
         $issues = $this->cache->loadIssues();
 
-        if($issues === null) {
-            $issues = $this->getFreshAudit();
+        if ($issues === null) {
+            $issues = $this->getFromComposer();
             $this->cache->saveIssues($issues);
         }
 
@@ -35,7 +34,7 @@ class Audit
      * @return AuditIssue[]
      * @throws \Exception
      */
-    private function getFreshAudit(): array
+    private function getFromComposer(): array
     {
         $command = 'vendor/bin/composer audit --format=json --abandoned=ignore';
         $process = new Process(explode(' ', $command));

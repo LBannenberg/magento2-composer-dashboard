@@ -10,15 +10,15 @@
 }
 
 .composer-audit-severity-medium {
-    background-color: #ffc107; /* Brighter yellow for better contrast */
-    color: #212529;            /* Dark text for readability */
+    background-color: #ffc107;
+    color: #212529;
     font-size: 1.25rem;
     font-weight: 600;
 }
 
 .composer-audit-severity-high {
-    background-color: #e03131; /* Vibrant red for urgency */
-    color: #ffffff;            /* White text for readability */
+    background-color: #e03131;
+    color: #ffffff;
     font-size: 1.5rem;
     font-weight: 800;
 }
