@@ -10,8 +10,7 @@ class Outdated
 {
     public function __construct(
         private readonly ComposerCache $cache
-    )
-    {
+    ) {
     }
 
     public function getRows(): array
@@ -48,7 +47,7 @@ class Outdated
 
         $rows = [];
         foreach ($installed as $package) {
-            $rows[] = new OutdatedPackage(
+            $outdated = new OutdatedPackage(
                 package: $package['name'],
                 direct: $package['direct-dependency'],
                 homepage: $package['homepage'] ?? '',
@@ -62,7 +61,39 @@ class Outdated
                 description: $package['description'],
                 abandoned: $package['abandoned']
             );
+            if ($outdated->package === 'magento/product-community-edition') {
+                $outdated = $this->checkMagentoVersion($outdated);
+            }
+            $rows[] = $outdated;
         }
         return $rows;
+    }
+
+    private function checkMagentoVersion(OutdatedPackage $outdated): OutdatedPackage
+    {
+        $current = explode('.', $outdated->version);
+        $current = array_merge(
+            [$current[0], $current[1]],
+            explode('-', $current[2])
+        );
+
+        $latest = explode('.', $outdated->latest);
+        $latest = array_merge(
+            [$latest[0], $latest[1]],
+            explode('-', $latest[2])
+        );
+
+        if ($current[0] == $latest[0]
+            && $current[1] == $latest[1]
+            && $current[2] == $latest[2]
+        ) {
+            // Then the only difference should be the -p version;
+            return $outdated;
+        }
+
+        // A difference between for example Magento 2.4.7 and 2.4.8 is not a semver-safe-update!!!
+        $data = (array)$outdated;
+        $data['latest_status'] = 'update-possible';
+        return new OutdatedPackage(...$data);
     }
 }
