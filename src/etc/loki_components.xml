@@ -5,4 +5,10 @@
         viewModel="Corrivate\ComposerDashboard\ViewModel\AuditGridViewModel"
         repository="Loki\AdminComponents\Component\Grid\GridRepository">
     </component>
+
+    <component
+        name="corrivate.composer-dashboard.outdated.grid"
+        viewModel="Corrivate\ComposerDashboard\ViewModel\OutdatedGridViewModel"
+        repository="Loki\AdminComponents\Component\Grid\GridRepository">
+    </component>
 </components>
