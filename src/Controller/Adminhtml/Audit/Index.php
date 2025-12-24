@@ -8,30 +8,19 @@ use Magento\Framework\View\Result\PageFactory;
 
 class Index implements HttpGetActionInterface
 {
+    public const ADMIN_RESOURCE = 'Corrivate_ComposerDashboard::composerdashboard';
 
-    /**
-     * @var PageFactory
-     */
-    protected $resultPageFactory;
-
-    /**
-     * Constructor
-     *
-     * @param PageFactory $resultPageFactory
-     */
-    public function __construct(PageFactory $resultPageFactory)
+    public function __construct(private readonly PageFactory $resultPageFactory)
     {
-        $this->resultPageFactory = $resultPageFactory;
     }
 
-    /**
-     * Execute view action
-     *
-     * @return ResultInterface
-     */
     public function execute(): ResultInterface
     {
-        return $this->resultPageFactory->create();
+        $title = 'Composer Audit';
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->addBreadcrumb(__($title), __($title));
+        $resultPage->getConfig()->getTitle()->prepend(__($title));
+        return $resultPage;
     }
 }
 
