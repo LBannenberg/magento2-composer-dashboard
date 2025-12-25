@@ -9,11 +9,13 @@
     <body>
         <referenceContainer name="content">
             <block
-                name="corrivate.composer-dashboard.installed.grid"
+                name="corrivate.composer-dashboard.required.grid"
                 template="Loki_AdminComponents::grid.phtml">
                 <arguments>
                     <argument name="hide_actions" xsi:type="boolean">true</argument>
-                    <argument name="provider" xsi:type="string">\Corrivate\ComposerDashboard\Provider\InstalledArrayProvider</argument>
+                    <argument name="provider" xsi:type="string">
+                        \Corrivate\ComposerDashboard\Provider\RequiredArrayProvider
+                    </argument>
                 </arguments>
             </block>
         </referenceContainer>

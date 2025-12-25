@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Corrivate\ComposerDashboard\Controller\Adminhtml\Installed;
+namespace Corrivate\ComposerDashboard\Controller\Adminhtml\Required;
 
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\ResultInterface;
@@ -16,7 +16,7 @@ class Index implements HttpGetActionInterface
 
     public function execute(): ResultInterface
     {
-        $title = 'Composer > Installed Packages';
+        $title = 'Composer > Required Packages';
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('Magento_Backend::system');
         $resultPage->addBreadcrumb(__($title), __($title));

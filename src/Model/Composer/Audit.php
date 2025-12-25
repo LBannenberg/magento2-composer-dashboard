@@ -16,10 +16,6 @@ class Audit
 
     public function getRows(): array
     {
-        // Getting the composer audit takes some time,
-        // and we need these rows probably at least several times in a row,
-        // so we should use caching.
-
         $issues = $this->cache->loadIssues();
 
         if ($issues === null) {

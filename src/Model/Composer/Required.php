@@ -3,32 +3,35 @@
 namespace Corrivate\ComposerDashboard\Model\Composer;
 
 use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
-use Corrivate\ComposerDashboard\Model\Value\OutdatedPackage;
+use Corrivate\ComposerDashboard\Model\Value\RequiredPackage;
 use Symfony\Component\Process\Process;
 
-class Outdated
+class Required
 {
     public function __construct(
         private readonly ComposerCache $cache
     ) {
     }
 
+    /**
+     * @return RequiredPackage[]
+     */
     public function getRows(): array
     {
-        $rows = $this->cache->loadOutdated();
+        $rows = $this->cache->loadRequired();
 
         if ($rows === null) {
             $rows = $this->getFromComposer();
-            $this->cache->saveOutdated($rows);
+            $this->cache->saveRequired($rows);
         }
 
         return $rows;
     }
 
-    /** @return OutdatedPackage[] */
+    /** @return RequiredPackage[] */
     private function getFromComposer(): array
     {
-        $command = 'vendor/bin/composer outdated --format=json --direct --no-dev';
+        $command = 'vendor/bin/composer show --format=json --no-dev --latest --direct';
         $process = new Process(explode(' ', $command));
 
         $currentDir = getcwd();
@@ -43,7 +46,7 @@ class Outdated
 
         $rows = [];
         foreach ($packages as $package) {
-            $outdated = new OutdatedPackage(
+            $install = new RequiredPackage(
                 package: $package['name'],
                 direct: $package['direct-dependency'],
                 homepage: $package['homepage'] ?? '',
@@ -54,26 +57,26 @@ class Outdated
                 latest: $package['latest'],
                 latest_status: $package['latest-status'],
                 latest_release_date: $package['latest-release-date'],
-                description: $package['description'],
+                description: $package['description'] ?? '',
                 abandoned: $package['abandoned']
             );
-            if ($outdated->package === 'magento/product-community-edition') {
-                $outdated = $this->checkMagentoVersion($outdated);
+            if ($install->package === 'magento/product-community-edition') {
+                $install = $this->checkMagentoVersion($install);
             }
-            $rows[] = $outdated;
+            $rows[] = $install;
         }
         return $rows;
     }
 
-    private function checkMagentoVersion(OutdatedPackage $outdated): OutdatedPackage
+    private function checkMagentoVersion(RequiredPackage $install): RequiredPackage
     {
-        $current = explode('.', $outdated->version);
+        $current = explode('.', $install->version);
         $current = array_merge(
             [$current[0], $current[1]],
             explode('-', $current[2])
         );
 
-        $latest = explode('.', $outdated->latest);
+        $latest = explode('.', $install->latest);
         $latest = array_merge(
             [$latest[0], $latest[1]],
             explode('-', $latest[2])
@@ -84,12 +87,12 @@ class Outdated
             && $current[2] == $latest[2]
         ) {
             // Then the only difference should be the -p version;
-            return $outdated;
+            return $install;
         }
 
         // A difference between for example Magento 2.4.7 and 2.4.8 is not a semver-safe-update!!!
-        $data = (array)$outdated;
+        $data = (array)$install;
         $data['latest_status'] = 'update-possible';
-        return new OutdatedPackage(...$data);
+        return new RequiredPackage(...$data);
     }
 }

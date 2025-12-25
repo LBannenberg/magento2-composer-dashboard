@@ -1,0 +1,16 @@
+<?php
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+
+?>
+
+<?php if($block->getValue()): ?>
+    <b>Yes</b>
+<?php else: ?>
+    No
+<?php endif; ?>
