@@ -7,6 +7,12 @@
     </component>
 
     <component
+        name="corrivate.composer-dashboard.installed.grid"
+        viewModel="Loki\AdminComponents\Component\Grid\GridViewModel"
+        repository="Loki\AdminComponents\Component\Grid\GridRepository">
+    </component>
+
+    <component
         name="corrivate.composer-dashboard.outdated.grid"
         viewModel="Loki\AdminComponents\Component\Grid\GridViewModel"
         repository="Loki\AdminComponents\Component\Grid\GridRepository">

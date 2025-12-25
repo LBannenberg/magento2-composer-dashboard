@@ -17,10 +17,18 @@
              parent="Corrivate::composer_dashboard"
              action="composerdashboard/audit/index"/>
 
+        <add id="Corrivate_ComposerDashboard::installed_index"
+             title="Installed Packages"
+             module="Corrivate_ComposerDashboard"
+             sortOrder="20"
+             resource="Corrivate_ComposerDashboard::composerdashboard"
+             parent="Corrivate::composer_dashboard"
+             action="composerdashboard/installed/index"/>
+
         <add id="Corrivate_ComposerDashboard::outdated_index"
              title="Outdated Packages"
              module="Corrivate_ComposerDashboard"
-             sortOrder="20"
+             sortOrder="30"
              resource="Corrivate_ComposerDashboard::composerdashboard"
              parent="Corrivate::composer_dashboard"
              action="composerdashboard/outdated/index"/>
