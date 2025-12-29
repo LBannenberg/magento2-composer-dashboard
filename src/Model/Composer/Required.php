@@ -8,6 +8,7 @@ use Symfony\Component\Process\Process;
 
 class Required
 {
+    private array $upgradeTypes = [];
     public function __construct(
         private readonly ComposerCache $cache
     ) {
@@ -26,6 +27,18 @@ class Required
         }
 
         return $rows;
+    }
+
+    /** @return string[] */
+    public function getUpgradeTypes(): array
+    {
+        if (!$this->upgradeTypes) {
+            $this->upgradeTypes = array_unique(array_map(
+                fn (RequiredPackage $row) => $row->latest_status,
+                $this->getRows()
+            ));
+        }
+        return $this->upgradeTypes;
     }
 
     /** @return RequiredPackage[] */
