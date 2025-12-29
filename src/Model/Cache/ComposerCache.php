@@ -4,7 +4,6 @@ namespace Corrivate\ComposerDashboard\Model\Cache;
 
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
 use Corrivate\ComposerDashboard\Model\Value\RequiredPackage;
-use Corrivate\ComposerDashboard\Model\Value\OutdatedPackage;
 use Magento\Framework\App\Cache\Type\FrontendPool;
 use Magento\Framework\Serialize\SerializerInterface;
 
@@ -16,7 +15,6 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
 
     private const TTL = 60 * 60 * 24;
     private const AUDIT_ISSUES = self::CACHE_TAG . '_AUDIT';
-    private const OUTDATED_PACKAGES = self::CACHE_TAG . '_OUTDATED';
     private const REQUIRED_PACKAGES = self::CACHE_TAG . '_REQUIRED';
 
     public function __construct(
@@ -51,30 +49,6 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
         return null;
     }
 
-    /** @param OutdatedPackage[] $rows */
-    public function saveOutdated(array $rows): void
-    {
-        $this->save(
-            $this->serializer->serialize($rows),
-            self::OUTDATED_PACKAGES,
-            [ComposerCache::CACHE_TAG],
-            self::TTL
-        );
-    }
-
-    /** @return ?OutdatedPackage[] */
-    public function loadOutdated(): ?array
-    {
-        $cached = $this->load(self::OUTDATED_PACKAGES);
-        if ($cached !== false) {
-            return array_map(
-                fn ($issue) => new OutdatedPackage(...$issue),
-                $this->serializer->unserialize($cached)
-            );
-        }
-
-        return null;
-    }
 
     /** @return ?RequiredPackage[] */
     public function loadRequired(): ?array

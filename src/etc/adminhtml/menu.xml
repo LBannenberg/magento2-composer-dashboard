@@ -25,12 +25,5 @@
              parent="Corrivate::composer_dashboard"
              action="composerdashboard/required/index"/>
 
-        <add id="Corrivate_ComposerDashboard::outdated_index"
-             title="Outdated Packages"
-             module="Corrivate_ComposerDashboard"
-             sortOrder="30"
-             resource="Corrivate_ComposerDashboard::composerdashboard"
-             parent="Corrivate::composer_dashboard"
-             action="composerdashboard/outdated/index"/>
     </menu>
 </config>
