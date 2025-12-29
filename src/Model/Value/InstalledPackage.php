@@ -2,7 +2,7 @@
 
 namespace Corrivate\ComposerDashboard\Model\Value;
 
-readonly class RequiredPackage
+readonly class InstalledPackage
 {
     public function __construct(
         public string $package,

@@ -3,7 +3,7 @@
 namespace Corrivate\ComposerDashboard\Model\Cache;
 
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
-use Corrivate\ComposerDashboard\Model\Value\RequiredPackage;
+use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
 use Magento\Framework\App\Cache\Type\FrontendPool;
 use Magento\Framework\Serialize\SerializerInterface;
 
@@ -14,8 +14,8 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
     public const CACHE_TAG = 'COMPOSERDASHBOARD_CACHE_TAG';
 
     private const TTL = 60 * 60 * 24;
-    private const AUDIT_ISSUES = self::CACHE_TAG . '_AUDIT';
-    private const REQUIRED_PACKAGES = self::CACHE_TAG . '_REQUIRED';
+    private const AUDIT_TAG = self::CACHE_TAG . '_AUDIT';
+    private const INSTALLED_TAG = self::CACHE_TAG . '_INSTALLED';
 
     public function __construct(
         FrontendPool                         $cacheFrontendPool,
@@ -29,7 +29,7 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
     {
         $this->save(
             $this->serializer->serialize($rows),
-            self::AUDIT_ISSUES,
+            self::AUDIT_TAG,
             [ComposerCache::CACHE_TAG],
             self::TTL
         );
@@ -38,7 +38,7 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
     /** @return ?AuditIssue[] */
     public function loadIssues(): ?array
     {
-        $cached = $this->load(self::AUDIT_ISSUES);
+        $cached = $this->load(self::AUDIT_TAG);
         if ($cached !== false) {
             return array_map(
                 fn ($issue) => new AuditIssue(...$issue),
@@ -50,13 +50,13 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
     }
 
 
-    /** @return ?RequiredPackage[] */
-    public function loadRequired(): ?array
+    /** @return ?InstalledPackage[] */
+    public function loadInstalledPackages(): ?array
     {
-        $cached = $this->load(self::REQUIRED_PACKAGES);
+        $cached = $this->load(self::INSTALLED_TAG);
         if ($cached !== false) {
             return array_map(
-                fn ($issue) => new RequiredPackage(...$issue),
+                fn ($issue) => new InstalledPackage(...$issue),
                 $this->serializer->unserialize($cached)
             );
         }
@@ -64,12 +64,12 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
         return null;
     }
 
-    /** @param RequiredPackage[] $rows */
-    public function saveRequired(array $rows): void
+    /** @param InstalledPackage[] $rows */
+    public function saveInstalledPackages(array $rows): void
     {
         $this->save(
             $this->serializer->serialize($rows),
-            self::REQUIRED_PACKAGES,
+            self::INSTALLED_TAG,
             [ComposerCache::CACHE_TAG],
             self::TTL
         );

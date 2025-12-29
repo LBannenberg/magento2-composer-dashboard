@@ -3,10 +3,10 @@
 namespace Corrivate\ComposerDashboard\Model\Composer;
 
 use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
-use Corrivate\ComposerDashboard\Model\Value\RequiredPackage;
+use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
 use Symfony\Component\Process\Process;
 
-class Required
+class InstalledPackages
 {
     private array $upgradeTypes = [];
     public function __construct(
@@ -15,15 +15,15 @@ class Required
     }
 
     /**
-     * @return RequiredPackage[]
+     * @return InstalledPackage[]
      */
     public function getRows(): array
     {
-        $rows = $this->cache->loadRequired();
+        $rows = $this->cache->loadInstalledPackages();
 
         if ($rows === null) {
             $rows = $this->getFromComposer();
-            $this->cache->saveRequired($rows);
+            $this->cache->saveInstalledPackages($rows);
         }
 
         return $rows;
@@ -34,14 +34,14 @@ class Required
     {
         if (!$this->upgradeTypes) {
             $this->upgradeTypes = array_unique(array_map(
-                fn (RequiredPackage $row) => $row->latest_status,
+                fn (InstalledPackage $row) => $row->latest_status,
                 $this->getRows()
             ));
         }
         return $this->upgradeTypes;
     }
 
-    /** @return RequiredPackage[] */
+    /** @return InstalledPackage[] */
     private function getFromComposer(): array
     {
         $command = 'vendor/bin/composer show --format=json --no-dev --latest';
@@ -59,7 +59,7 @@ class Required
 
         $rows = [];
         foreach ($packages as $package) {
-            $install = new RequiredPackage(
+            $install = new InstalledPackage(
                 package: $package['name'],
                 direct: $package['direct-dependency'],
                 homepage: $package['homepage'] ?? '',
@@ -81,7 +81,7 @@ class Required
         return $rows;
     }
 
-    private function checkMagentoVersion(RequiredPackage $install): RequiredPackage
+    private function checkMagentoVersion(InstalledPackage $install): InstalledPackage
     {
         $current = explode('.', $install->version);
         $current = array_merge(
@@ -106,6 +106,6 @@ class Required
         // A difference between for example Magento 2.4.7 and 2.4.8 is not a semver-safe-update!!!
         $data = (array)$install;
         $data['latest_status'] = 'update-possible';
-        return new RequiredPackage(...$data);
+        return new InstalledPackage(...$data);
     }
 }

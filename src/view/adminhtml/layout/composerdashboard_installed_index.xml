@@ -9,11 +9,11 @@
     <body>
         <referenceContainer name="content">
             <block
-                name="corrivate.composer-dashboard.required.grid"
+                name="corrivate.composer-dashboard.installed-packages.grid"
                 template="Loki_AdminComponents::grid.phtml">
                 <arguments>
                     <argument name="provider" xsi:type="string">
-                        \Corrivate\ComposerDashboard\Provider\RequiredArrayProvider
+                        \Corrivate\ComposerDashboard\Provider\InstalledPackagesArrayProvider
                     </argument>
 
                     <argument name="hide_actions" xsi:type="boolean">true</argument>
@@ -35,13 +35,13 @@
                             <item name="options" xsi:type="object">\Corrivate\ComposerDashboard\ViewModel\Options\UpgradeOptions</item>
                         </item>
                         <item name="direct" xsi:type="array">
-                            <item name="label" xsi:type="string">Directly installed?</item>
+                            <item name="label" xsi:type="string">Directly Installed</item>
                             <item name="field_type" xsi:type="string">select</item>
                             <item name="condition_type" xsi:type="string">equals</item>
                             <item name="options" xsi:type="object">\Corrivate\ComposerDashboard\ViewModel\Options\DirectOptions</item>
                         </item>
                         <item name="abandoned" xsi:type="array">
-                            <item name="label" xsi:type="string">Abandoned by package creator?</item>
+                            <item name="label" xsi:type="string">Abandoned by package creator</item>
                             <item name="field_type" xsi:type="string">select</item>
                             <item name="condition_type" xsi:type="string">equals</item>
                             <item name="options" xsi:type="object">\Corrivate\ComposerDashboard\ViewModel\Options\AbandonedOptions</item>

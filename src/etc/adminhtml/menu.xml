@@ -17,13 +17,13 @@
              parent="Corrivate::composer_dashboard"
              action="composerdashboard/audit/index"/>
 
-        <add id="Corrivate_ComposerDashboard::required_index"
-             title="Required Packages"
+        <add id="Corrivate_ComposerDashboard::installed_index"
+             title="Installed Packages"
              module="Corrivate_ComposerDashboard"
              sortOrder="20"
              resource="Corrivate_ComposerDashboard::composerdashboard"
              parent="Corrivate::composer_dashboard"
-             action="composerdashboard/required/index"/>
+             action="composerdashboard/installed/index"/>
 
     </menu>
 </config>

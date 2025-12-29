@@ -2,15 +2,15 @@
 
 namespace Corrivate\ComposerDashboard\Provider;
 
-use Corrivate\ComposerDashboard\Model\Composer\Required;
+use Corrivate\ComposerDashboard\Model\Composer\InstalledPackages;
 use Loki\AdminComponents\Grid\Column\ColumnFactory;
-use Corrivate\ComposerDashboard\Model\Value\RequiredPackage;
+use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
 
-class RequiredArrayProvider implements \Loki\AdminComponents\Provider\ArrayProviderInterface
+class InstalledPackagesArrayProvider implements \Loki\AdminComponents\Provider\ArrayProviderInterface
 {
     public function __construct(
         private readonly ColumnFactory $columnFactory,
-        private readonly Required $required
+        private readonly InstalledPackages $installedPackages
     ) {
     }
 
@@ -28,12 +28,12 @@ class RequiredArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvi
             ]),
             $this->columnFactory->create([
                 'code' => 'direct',
-                'label' => 'Direct?',
+                'label' => 'Directly Installed',
                 'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/direct-package.phtml'
             ]),
             $this->columnFactory->create([
                 'code' => 'abandoned',
-                'label' => 'Abandoned?',
+                'label' => 'Abandoned',
                 'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/abandoned.phtml'
             ]),
             $this->columnFactory->create(['code' => 'description', 'label' => 'Description']),
@@ -42,9 +42,9 @@ class RequiredArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvi
 
     public function getData(): array
     {
-        $rows = $this->required->getRows();
+        $rows = $this->installedPackages->getRows();
         return array_map(
-            fn (RequiredPackage $row) => (array)$row,
+            fn (InstalledPackage $row) => (array)$row,
             $rows
         );
     }
