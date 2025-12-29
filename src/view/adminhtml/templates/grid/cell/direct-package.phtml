@@ -10,7 +10,7 @@ use Magento\Framework\View\Element\Template;
 ?>
 
 <?php if($block->getValue()): ?>
-    <b>Yes</b>
+    <span class="composer-badge composer-badge--primary">Direct</span>
 <?php else: ?>
-    No
+    <span class="composer-badge composer-badge--secondary">Indirect</span>
 <?php endif; ?>

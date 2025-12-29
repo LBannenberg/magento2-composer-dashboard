@@ -31,7 +31,7 @@ class Required
     /** @return RequiredPackage[] */
     private function getFromComposer(): array
     {
-        $command = 'vendor/bin/composer show --format=json --no-dev --latest --direct';
+        $command = 'vendor/bin/composer show --format=json --no-dev --latest';
         $process = new Process(explode(' ', $command));
 
         $currentDir = getcwd();

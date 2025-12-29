@@ -26,11 +26,11 @@ class RequiredArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvi
                 'label' => 'Upgrade status',
                 'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/semver-status.phtml'
             ]),
-//            $this->columnFactory->create([
-//                'code' => 'direct',
-//                'label' => 'Direct?',
-//                'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/direct-package.phtml'
-//            ]),
+            $this->columnFactory->create([
+                'code' => 'direct',
+                'label' => 'Direct?',
+                'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/direct-package.phtml'
+            ]),
             $this->columnFactory->create([
                 'code' => 'abandoned',
                 'label' => 'Abandoned?',

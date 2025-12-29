@@ -1,4 +1,3 @@
-/* Base styles for all badges */
 .composer-badge {
     display: inline-flex;
     align-items: center;
@@ -25,3 +24,20 @@
     background-color: #e03131;
     color: #ffffff;
 }
+
+.composer-badge--primary {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+
+.composer-badge--secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.composer-badge--info {
+    background-color: #17a2b8;
+    color: #ffffff;
+}
+
