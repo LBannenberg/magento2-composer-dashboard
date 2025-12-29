@@ -1,0 +1,18 @@
+<?php
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+
+$parts = explode(' ', $block->getValue(), 2)
+
+?>
+
+<span><?= $parts[0]?></span>
+<?php if(count($parts) == 2): ?>
+<br/>
+<span><?= $parts[1]?></span>
+<?php endif; ?>

@@ -17,7 +17,11 @@ class InstalledPackagesArrayProvider implements \Loki\AdminComponents\Provider\A
     public function getColumns(): array
     {
         return [
-            $this->columnFactory->create(['code' => 'package', 'label' => 'Package']),
+            $this->columnFactory->create([
+                'code' => 'package',
+                'label' => 'Package',
+                'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/package-name.phtml'
+            ]),
             $this->columnFactory->create(['code' => 'version', 'label' => 'Current Version']),
             $this->columnFactory->create(['code' => 'release_age', 'label' => 'Age']),
             $this->columnFactory->create(['code' => 'latest', 'label' => 'Latest Version']),

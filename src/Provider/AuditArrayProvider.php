@@ -17,7 +17,11 @@ class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvider
     public function getColumns(): array
     {
         return [
-            $this->columnFactory->create(['code' => 'package', 'label' => 'Package']),
+            $this->columnFactory->create([
+                'code' => 'package',
+                'label' => 'Package',
+                'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/package-name.phtml'
+            ]),
             $this->columnFactory->create([
                 'code' => 'severity',
                 'label' => 'Severity',
