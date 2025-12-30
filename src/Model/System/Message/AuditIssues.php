@@ -49,8 +49,10 @@ class AuditIssues implements \Magento\Framework\Notification\MessageInterface
         $severity = MessageInterface::SEVERITY_MINOR;
         foreach (($this->composerCache->loadIssues() ?? []) as $issue) {
             $severity = min($severity, match($issue->severity) {
+                'low' => MessageInterface::SEVERITY_MINOR,
                 'medium' => MessageInterface::SEVERITY_MAJOR,
-                'high' => MessageInterface::SEVERITY_CRITICAL
+                'high', 'critical' => MessageInterface::SEVERITY_CRITICAL,
+                default  => MessageInterface::SEVERITY_CRITICAL // in case composer ever throws in a new message level
             });
         }
         return $severity;
