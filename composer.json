@@ -2,7 +2,7 @@
     "name": "corrivate/magento2-composer-dashboard",
     "description": "View composer issues inside the Magento admin panel, useful for PMs etc.",
     "type": "magento2-module",
-    "licence": "MIT",
+    "license": "MIT",
     "authors": [
         {
             "name": "Lau Bannenberg",
