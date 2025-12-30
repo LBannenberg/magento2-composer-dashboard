@@ -45,12 +45,9 @@ class InstalledPackages
     private function getFromComposer(): array
     {
         $command = 'vendor/bin/composer show --format=json --no-dev --latest';
+
         $process = new Process(explode(' ', $command));
-
-        $currentDir = getcwd();
-        $parentDir = dirname($currentDir);
-        $process->setWorkingDirectory($parentDir);
-
+        $process->setWorkingDirectory(BP);
         $process->run();
 
         $output = $process->getOutput();

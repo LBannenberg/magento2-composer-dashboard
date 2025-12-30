@@ -33,12 +33,9 @@ class Audit
     private function getFromComposer(): array
     {
         $command = 'vendor/bin/composer audit --format=json --abandoned=ignore';
+
         $process = new Process(explode(' ', $command));
-
-        $currentDir = getcwd();
-        $parentDir = dirname($currentDir);
-        $process->setWorkingDirectory($parentDir);
-
+        $process->setWorkingDirectory(BP);
         $process->run();
 
         $output = $process->getOutput();
@@ -58,6 +55,7 @@ class Audit
                 );
             }
         }
+
         return $rows;
     }
 }

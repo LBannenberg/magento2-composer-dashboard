@@ -2,7 +2,7 @@
 
 namespace Corrivate\ComposerDashboard\Model\System\Message;
 
-use Corrivate\ComposerDashboard\Model\Composer\Audit;
+use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
 use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\AuthorizationInterface;
@@ -12,15 +12,15 @@ class AuditIssues implements \Magento\Framework\Notification\MessageInterface
 {
     public function __construct(
         private readonly AuthorizationInterface $authorization,
-        private readonly Audit $audit,
-        private readonly UrlInterface $urlBuilder
+        private readonly UrlInterface $urlBuilder,
+        private readonly ComposerCache $composerCache
     ) {
 
     }
 
     public function getIdentity(): string
     {
-        $issues = $this->audit->getRows();
+        $issues = $this->composerCache->loadIssues() ?? [];
         $packages = array_map(
             fn (AuditIssue $p) => $p->package,
             $issues
@@ -33,7 +33,7 @@ class AuditIssues implements \Magento\Framework\Notification\MessageInterface
     public function isDisplayed(): bool
     {
         return $this->authorization->isAllowed('Corrivate_ComposerDashboard::composerdashboard')
-            && count($this->audit->getRows()) > 0;
+            && $this->composerCache->loadIssues();
     }
 
     public function getText(): string
@@ -47,7 +47,7 @@ class AuditIssues implements \Magento\Framework\Notification\MessageInterface
     public function getSeverity(): int
     {
         $severity = MessageInterface::SEVERITY_MINOR;
-        foreach ($this->audit->getRows() as $issue) {
+        foreach (($this->composerCache->loadIssues() ?? []) as $issue) {
             $severity = min($severity, match($issue->severity) {
                 'medium' => MessageInterface::SEVERITY_MAJOR,
                 'high' => MessageInterface::SEVERITY_CRITICAL
