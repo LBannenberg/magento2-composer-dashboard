@@ -14,6 +14,7 @@ class UpgradeOptions implements ArgumentInterface, OptionSourceInterface
     ) {
     }
 
+    /** @return array<array{value: string, label: string}> */
     public function toOptionArray(): array
     {
         $options = [

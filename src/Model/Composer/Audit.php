@@ -10,10 +10,10 @@ class Audit
 {
     public function __construct(
         private readonly ComposerCache $cache
-    )
-    {
+    ) {
     }
 
+    /** @return AuditIssue[] */
     public function getRows(): array
     {
         $issues = $this->cache->loadIssues();
@@ -26,16 +26,13 @@ class Audit
         return $issues;
     }
 
-    /**
-     * @return AuditIssue[]
-     * @throws \Exception
-     */
+    /** @return AuditIssue[] */
     private function getFromComposer(): array
     {
         $command = 'vendor/bin/composer audit --format=json --abandoned=ignore';
 
         $process = new Process(explode(' ', $command));
-        $process->setWorkingDirectory(BP);
+        $process->setWorkingDirectory(BP); // @phpstan-ignore constant.notFound
         $process->run();
 
         $output = $process->getOutput();

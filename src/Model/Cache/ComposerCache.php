@@ -28,7 +28,7 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
     public function saveIssues(array $rows): void
     {
         $this->save(
-            $this->serializer->serialize($rows),
+            $this->serializer->serialize($rows), // @phpstan-ignore argument.type
             self::AUDIT_TAG,
             [ComposerCache::CACHE_TAG],
             self::TTL
@@ -42,7 +42,7 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
         if ($cached !== false) {
             return array_map(
                 fn ($issue) => new AuditIssue(...$issue),
-                $this->serializer->unserialize($cached)
+                $this->serializer->unserialize($cached) // @phpstan-ignore argument.type, argument.type
             );
         }
 
@@ -57,7 +57,7 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
         if ($cached !== false) {
             return array_map(
                 fn ($issue) => new InstalledPackage(...$issue),
-                $this->serializer->unserialize($cached)
+                $this->serializer->unserialize($cached) // @phpstan-ignore argument.type, argument.type
             );
         }
 
@@ -68,7 +68,7 @@ class ComposerCache extends \Magento\Framework\Cache\Frontend\Decorator\TagScope
     public function saveInstalledPackages(array $rows): void
     {
         $this->save(
-            $this->serializer->serialize($rows),
+            $this->serializer->serialize($rows), // @phpstan-ignore argument.type
             self::INSTALLED_TAG,
             [ComposerCache::CACHE_TAG],
             self::TTL

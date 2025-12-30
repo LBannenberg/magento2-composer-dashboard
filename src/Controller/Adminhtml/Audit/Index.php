@@ -18,9 +18,9 @@ class Index implements HttpGetActionInterface
     {
         $title = 'Composer > Security Advisories';
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('Magento_Backend::system');
-        $resultPage->addBreadcrumb(__($title), __($title));
-        $resultPage->getConfig()->getTitle()->prepend(__($title));
+        $resultPage->setActiveMenu('Magento_Backend::system'); // @phpstan-ignore method.notFound
+        $resultPage->addBreadcrumb(__($title), __($title)); // @phpstan-ignore method.notFound
+        $resultPage->getConfig()->getTitle()->prepend((string)__($title));
         return $resultPage;
     }
 }

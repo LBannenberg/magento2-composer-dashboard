@@ -47,6 +47,7 @@ class InstalledPackagesArrayProvider implements \Loki\AdminComponents\Provider\A
         ];
     }
 
+    /** @return array<array<string, mixed>> */
     public function getData(): array
     {
         return array_map(

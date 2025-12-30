@@ -4,6 +4,7 @@ namespace Corrivate\ComposerDashboard\Model\Meta;
 
 class PackageAliases
 {
+    /** @param array<string, string> $aliases */
     public function __construct(
         private readonly array $aliases = []
     )

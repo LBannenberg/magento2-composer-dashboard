@@ -40,6 +40,7 @@ class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvider
         ];
     }
 
+    /** @return array<array<string, mixed>> */
     public function getData(): array
     {
         return array_map(

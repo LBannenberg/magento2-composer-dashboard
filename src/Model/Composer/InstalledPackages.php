@@ -8,6 +8,7 @@ use Symfony\Component\Process\Process;
 
 class InstalledPackages
 {
+    /** @var string[] */
     private array $upgradeTypes = [];
     public function __construct(
         private readonly ComposerCache $cache,
@@ -47,7 +48,7 @@ class InstalledPackages
         $command = 'vendor/bin/composer show --format=json --no-dev --latest';
 
         $process = new Process(explode(' ', $command));
-        $process->setWorkingDirectory(BP);
+        $process->setWorkingDirectory(BP); // @phpstan-ignore constant.notFound
         $process->run();
 
         $output = $process->getOutput();
