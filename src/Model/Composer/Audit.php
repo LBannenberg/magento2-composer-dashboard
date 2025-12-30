@@ -9,8 +9,7 @@ use Symfony\Component\Process\Process;
 class Audit
 {
     public function __construct(
-        private readonly ComposerCache $cache,
-        private readonly PackageAliases $aliases
+        private readonly ComposerCache $cache
     )
     {
     }
@@ -50,7 +49,7 @@ class Audit
         foreach ($advisories as $package => $issues) {
             foreach ($issues as $issue) {
                 $rows[] = new AuditIssue(
-                    package: $this->aliases->for($package),
+                    package: $package,
                     title: $issue['title'],
                     cve: $issue['cve'],
                     link: $issue['link'],

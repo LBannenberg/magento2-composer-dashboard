@@ -3,15 +3,18 @@
 namespace Corrivate\ComposerDashboard\Provider;
 
 use Corrivate\ComposerDashboard\Model\Composer\InstalledPackages;
+use Corrivate\ComposerDashboard\Model\Meta\PackageAliases;
 use Loki\AdminComponents\Grid\Column\ColumnFactory;
 use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
 
 class InstalledPackagesArrayProvider implements \Loki\AdminComponents\Provider\ArrayProviderInterface
 {
     public function __construct(
-        private readonly ColumnFactory $columnFactory,
+        private readonly ColumnFactory     $columnFactory,
+        private readonly PackageAliases    $aliases,
         private readonly InstalledPackages $installedPackages
-    ) {
+    )
+    {
     }
 
     public function getColumns(): array
@@ -46,10 +49,13 @@ class InstalledPackagesArrayProvider implements \Loki\AdminComponents\Provider\A
 
     public function getData(): array
     {
-        $rows = $this->installedPackages->getRows();
         return array_map(
-            fn (InstalledPackage $row) => (array)$row,
-            $rows
+            function (InstalledPackage $row) {
+                $row = (array)$row;
+                $row['package'] = $this->aliases->for($row['package']);
+                return $row;
+            },
+            $this->installedPackages->getRows()
         );
     }
 }

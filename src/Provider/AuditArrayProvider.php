@@ -3,14 +3,16 @@
 namespace Corrivate\ComposerDashboard\Provider;
 
 use Corrivate\ComposerDashboard\Model\Composer\Audit;
+use Corrivate\ComposerDashboard\Model\Meta\PackageAliases;
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
 use Loki\AdminComponents\Grid\Column\ColumnFactory;
 
 class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProviderInterface
 {
     public function __construct(
-        private readonly ColumnFactory $columnFactory,
-        private readonly Audit $audit
+        private readonly ColumnFactory  $columnFactory,
+        private readonly PackageAliases $aliases,
+        private readonly Audit          $audit
     ) {
     }
 
@@ -40,10 +42,13 @@ class AuditArrayProvider implements \Loki\AdminComponents\Provider\ArrayProvider
 
     public function getData(): array
     {
-        $rows =  $this->audit->getRows();
         return array_map(
-            fn (AuditIssue $row) => (array)$row,
-            $rows
+            function (AuditIssue $row) {
+                $row = (array)$row;
+                $row['package'] = $this->aliases->for($row['package']);
+                return $row;
+            },
+            $this->audit->getRows()
         );
     }
 }

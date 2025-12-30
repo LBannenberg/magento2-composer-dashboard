@@ -1,6 +1,6 @@
 <?php
 
-namespace Corrivate\ComposerDashboard\Model\Composer;
+namespace Corrivate\ComposerDashboard\Model\Meta;
 
 class PackageAliases
 {

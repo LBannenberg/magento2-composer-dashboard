@@ -11,7 +11,6 @@ class InstalledPackages
     private array $upgradeTypes = [];
     public function __construct(
         private readonly ComposerCache $cache,
-        private readonly PackageAliases $aliases
     ) {
     }
 
@@ -61,7 +60,7 @@ class InstalledPackages
         $rows = [];
         foreach ($packages as $package) {
             $install = new InstalledPackage(
-                package: $this->aliases->for($package['name']),
+                package: $package['name'],
                 direct: $package['direct-dependency'],
                 homepage: $package['homepage'] ?? '',
                 source: $package['source'] ?? '',
