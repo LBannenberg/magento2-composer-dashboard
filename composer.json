@@ -13,21 +13,12 @@
     "require": {
         "loki/magento2-admin-components": "^0.4.2"
     },
-    "require-dev": {
-        "bitexpert/phpstan-magento": "^0.30.1",
-        "phpstan/extension-installer": "^1.3",
-        "phpstan/phpstan": "^1.9"
-    },
     "autoload": {
         "files": [
             "src/registration.php"
         ],
         "psr-4": {
             "Corrivate\\ComposerDashboard\\": "src/"
-        },
-        "autoload-dev": {
-            "psr-4": {
-                "Corrivate\\ComposerDashboard\\": "tests/"}
         }
     }
 }

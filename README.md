@@ -1,5 +1,8 @@
 # Magento 2 Composer Dashboard
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/corrivate/magento2-composer-dashboard?color=blue)](https://packagist.org/packages/corrivate/magento2-composer-dashboard)
+[![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
+
 By `Corrivate`
 
 ## Introduction
