@@ -74,6 +74,9 @@ Some vendors use commercial names for packages that are quite different than the
     </type>
 ```
 
+## Known Issues
+* Filters in the installed packages grid don't work. This feature is not fully implemented yet in the Loki Admin Components.
+
 ## Corrivate
 (en.wiktionary.org)
 
