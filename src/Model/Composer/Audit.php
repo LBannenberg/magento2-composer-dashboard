@@ -44,10 +44,10 @@ class Audit
             foreach ($issues as $issue) {
                 $rows[] = new AuditIssue(
                     package: $package,
-                    title: $issue['title'],
-                    cve: $issue['cve'],
-                    link: $issue['link'],
-                    severity: $issue['severity'],
+                    title: $issue['title'] ?? '(no title)',
+                    cve: $issue['cve'] ?? 'unknown',
+                    link: $issue['link'] ?? '',
+                    severity: $issue['severity'] ?? 'unknown',
                     reported: (new \DateTime($issue['reportedAt']))->format('Y-m-d H:i:s')
                 );
             }
