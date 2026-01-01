@@ -6,5 +6,9 @@
              method="execute">
             <schedule>* * * * *</schedule>
         </job>
+        <job name="corrivate_composerdashboard_send_advisory_reminders"
+             instance="Corrivate\ComposerDashboard\Cron\SendAdvisoryReminders" method="execute">
+            <schedule>0 0 * * *</schedule>
+        </job>
     </group>
 </config>
