@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+
+        <section id="corrivate_composer_dashboard" type="text" sortOrder="100" showInDefault="1" showInWebsite="0"
+                 showInStore="0">
+            <label>Composer Dashboard</label>
+            <tab>advanced</tab>
+            <resource>Corrivate_ComposerDashboard::composerdashboard</resource>
+
+
+            <group id="security_advisories" translate="label,comment" showInDefault="1" showInWebsite="0"
+                   showInStore="0">
+                <label>Security Advisories</label>
+                <comment>
+                    <![CDATA[
+                    You can subscribe to daily reminders about security advisories for your composer packages.
+                    ]]>
+                </comment>
+
+
+                <field id="recipients" translate="label" type="text" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Recipients</label>
+                    <comment>
+                        <![CDATA[<span style="color:DarkOrange;">Use comma-separated email addresses</span>]]>
+                    </comment>
+                </field>
+            </group>
+
+
+            <group id="outdated_packages" translate="label,comment" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Outdated Packages</label>
+                <comment>
+                    <![CDATA[
+                     You can subscribe to weekly reminders about outdated composer packages.
+                     We will only send emails about directly installed packages.
+                    ]]>
+                </comment>
+
+                <field id="recipients" translate="label" type="text" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Recipients</label>
+                    <comment>
+                        <![CDATA[<span style="color:DarkOrange;">Use comma-separated email addresses</span>]]>
+                    </comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

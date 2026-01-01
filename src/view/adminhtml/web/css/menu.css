@@ -1,0 +1,9 @@
+.admin__menu [data-ui-id^='menu-corrivate-'] .submenu-group-title span,
+.admin__menu [data-ui-id^='menu-magento-'] [data-ui-id^='menu-magento-'] [data-ui-id^='menu-corrivate-'] span {
+    background-image: url('../images/corrivate-32x32.png');
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    text-indent: 32px;
+    display: inline-block;
+}

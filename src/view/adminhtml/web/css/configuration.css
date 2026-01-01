@@ -1,0 +1,7 @@
+.admin__page-nav-item a[href*="section/corrivate_composer_dashboard"] {
+    background-image: url('../images/corrivate-32x32.png') !important;
+    background-position: 4px center !important;
+    background-repeat: no-repeat !important;
+    background-size: 24px 24px !important;
+    text-indent: 24px;
+}
