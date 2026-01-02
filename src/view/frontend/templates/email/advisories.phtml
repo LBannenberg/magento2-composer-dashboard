@@ -1,0 +1,19 @@
+<?php
+
+/** @var \Corrivate\ComposerDashboard\Block\Email\Advisories $block */
+?>
+
+<?php foreach ($block->getAdvisories() as $advisory): ?>
+    <tr>
+        <td><?= $advisory->package ?></td>
+        <td><?= $advisory->cve ?></td>
+        <?php if($advisory->severity == 'high' || $advisory->severity == 'critical'): ?>
+            <td><b style="color:red"><?= $advisory->severity ?></b></td>
+        <?php elseif ($advisory->severity == 'medium'): ?>
+            <td style="color:red"><?= $advisory->severity ?></td>
+        <?php else: ?>
+            <td><?= $advisory->severity ?></td>
+        <?php endif; ?>
+
+    </tr>
+<?php endforeach; ?>

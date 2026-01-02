@@ -39,4 +39,13 @@ class Settings
             fn (string $v) => filter_var($v, FILTER_VALIDATE_EMAIL)
         );
     }
+
+    /** @return array{email: string, name: string} */
+    public function getSender(): array
+    {
+        return [
+            'email' => '',
+            'name' => ''
+        ];
+    }
 }

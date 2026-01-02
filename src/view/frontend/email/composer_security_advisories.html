@@ -1,0 +1,32 @@
+<!--@subject {{trans "Composer Security Avisories"}} @-->
+<!--@vars {} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p>Warning!</p>
+<p>You are using composer packages with security advisories:</p>
+
+<table style="width: 100%;">
+    <thead>
+    <tr>
+        <th>package</th>
+        <th>CVE</th>
+        <th>severity</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{block
+    class="Corrivate\\ComposerDashboard\\Block\\Email\\Advisories"
+    area="frontend"
+    template="Corrivate_ComposerDashboard::email/advisories.phtml"
+    }}
+    </tbody>
+</table>
+
+<br/>
+<br/>
+
+<p>Please check the composer dashboard in your admin panel for more details.</p>
+<p>(System > Composer Dashboard > Security Advisories) </p>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="corrivate_composer_security_advisories" label="Composer Security Advisories"
+              file="composer_security_advisories.html" type="html" module="Corrivate_ComposerDashboard"
+              area="adminhtml"/>
+</config>
+
