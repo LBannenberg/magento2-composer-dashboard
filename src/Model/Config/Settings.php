@@ -44,8 +44,8 @@ class Settings
     public function getSender(): array
     {
         return [
-            'email' => '',
-            'name' => ''
+            'email' => (string)$this->scopeConfig->getValue('trans_email/ident_general/email'),
+            'name' => (string)$this->scopeConfig->getValue('trans_email/ident_general/name')
         ];
     }
 }
