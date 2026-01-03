@@ -30,7 +30,7 @@ class SendAdvisoryReminders
             return; // Nobody listening, boo!
         }
 
-        if (!$this->audit->getRows()) {
+        if (!$this->audit->getRows(forceFresh: true)) {
             return; // No security advisories, yay!
         }
 
