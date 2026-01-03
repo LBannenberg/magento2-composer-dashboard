@@ -14,11 +14,11 @@ class Audit
     }
 
     /** @return AuditIssue[] */
-    public function getRows(bool $forceFresh = false): array
+    public function getRows(bool $forceRefresh = false): array
     {
         $issues = $this->cache->loadIssues();
 
-        if ($issues === null || $forceFresh) {
+        if ($issues === null || $forceRefresh) {
             $issues = $this->getFromComposer();
             $this->cache->saveIssues($issues);
         }

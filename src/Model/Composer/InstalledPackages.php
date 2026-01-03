@@ -15,14 +15,12 @@ class InstalledPackages
     ) {
     }
 
-    /**
-     * @return InstalledPackage[]
-     */
-    public function getRows(): array
+    /** @return InstalledPackage[] */
+    public function getRows(bool $forceFresh = false): array
     {
         $rows = $this->cache->loadInstalledPackages();
 
-        if ($rows === null) {
+        if ($rows === null || $forceFresh) {
             $rows = $this->getFromComposer();
             $this->cache->saveInstalledPackages($rows);
         }
@@ -40,6 +38,18 @@ class InstalledPackages
             ));
         }
         return $this->upgradeTypes;
+    }
+
+    /** @return InstalledPackage[] */
+    public function getOutdatedRows(bool $forceRefresh = false): array
+    {
+        $rows = $this->getRows($forceRefresh);
+        // We only want to report on direct packages in composer.json
+        $rows = array_filter($rows, fn (InstalledPackage $p) => $p->direct);
+
+        // We want to report on packages known to be not up to date,
+        // as well as abandoned packages because they will never get updates anymore
+        return array_filter($rows, fn (InstalledPackage $p) => $p->latest_status != 'up-to-date' || $p->abandoned);
     }
 
     /** @return InstalledPackage[] */
