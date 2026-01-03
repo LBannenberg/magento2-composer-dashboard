@@ -30,7 +30,7 @@ class SendOutdatedReminders
             return; // Nobody listening, boo!
         }
 
-        $outdated = $this->packages->getOutdatedRows(forceRefresh: false);
+        $outdated = $this->packages->getOutdatedRows(forceRefresh: true);
         if (!$outdated) {
             return; // Everything up to date, yay!
         }
