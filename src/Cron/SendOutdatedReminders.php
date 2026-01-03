@@ -2,7 +2,7 @@
 
 namespace Corrivate\ComposerDashboard\Cron;
 
-use Corrivate\ComposerDashboard\Model\Composer\Audit;
+use Corrivate\ComposerDashboard\Model\Composer\InstalledPackages;
 use Corrivate\ComposerDashboard\Model\Config\Settings;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\MailException;
@@ -10,33 +10,33 @@ use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\Translate\Inline\StateInterface;
 use Psr\Log\LoggerInterface;
 
-class SendAdvisoryReminders
+class SendOutdatedReminders
 {
-    private const TEMPLATE = 'corrivate_composer_security_advisories';
+    private const TEMPLATE = 'corrivate_composer_outdated_packages';
 
     public function __construct(
-        private readonly Settings         $settings,
-        private readonly Audit            $audit,
-        private readonly TransportBuilder $transportBuilder,
-        private readonly StateInterface   $inlineTranslation,
-        private readonly LoggerInterface  $logger
+        private readonly Settings          $settings,
+        private readonly InstalledPackages $packages,
+        private readonly TransportBuilder  $transportBuilder,
+        private readonly StateInterface    $inlineTranslation,
+        private readonly LoggerInterface   $logger
     )
     {
     }
 
     public function execute(): void
     {
-        if (!$this->settings->getAdvisoryRecipients()) {
+        if (!$this->settings->getOutdatedRecipients()) {
             return; // Nobody listening, boo!
         }
 
-        if (!$this->audit->getRows(forceRefresh: true)) {
-            return; // No security advisories, yay!
+        $outdated = $this->packages->getOutdatedRows(forceRefresh: false);
+        if (!$outdated) {
+            return; // Everything up to date, yay!
         }
 
         $this->send();
     }
-
 
     private function send(): void
     {
@@ -51,7 +51,7 @@ class SendAdvisoryReminders
                 ])
                 ->setTemplateVars([]) // fetched in the block
                 ->setFromByScope($this->settings->getSender());
-            foreach ($this->settings->getAdvisoryRecipients() as $recipient) {
+            foreach ($this->settings->getOutdatedRecipients() as $recipient) {
                 $this->transportBuilder->addTo($recipient);
             }
             $transport = $this->transportBuilder->getTransport();
@@ -63,4 +63,6 @@ class SendAdvisoryReminders
         $this->inlineTranslation->resume();
 
     }
+
+
 }

@@ -8,7 +8,11 @@
         </job>
         <job name="corrivate_composerdashboard_send_advisory_reminders"
              instance="Corrivate\ComposerDashboard\Cron\SendAdvisoryReminders" method="execute">
-            <schedule>0 0 * * *</schedule>
+            <schedule>0 3 * * *</schedule><!-- Daily 3AM -->
+        </job>
+        <job name="corrivate_composerdashboard_send_outdated_reminders"
+             instance="Corrivate\ComposerDashboard\Cron\SendOutdatedReminders" method="execute">
+            <schedule>0 3 * * 1</schedule><!-- Monday 3AM -->
         </job>
     </group>
 </config>

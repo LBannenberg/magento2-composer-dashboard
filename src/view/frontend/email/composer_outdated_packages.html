@@ -1,24 +1,26 @@
-<!--@subject {{trans "Composer Security Avisories"}} @-->
+<!--@subject {{trans "You have outdated packages"}} @-->
 <!--@vars {} @-->
 
 {{template config_path="design/email/header_template"}}
 
-<p>Warning!</p>
-<p>You are using composer packages with security advisories:</p>
+<p>Notice!</p>
+<p>Some of your composer packages are outdated or abandoned:</p>
 
 <table style="width: 100%;">
     <thead>
     <tr>
         <th>package</th>
-        <th>CVE</th>
-        <th>severity</th>
+        <th>current version</th>
+        <th>latest version</th>
+        <th>update status</th>
+        <th>abandoned</th>
     </tr>
     </thead>
     <tbody>
     {{block
-    class="Corrivate\\ComposerDashboard\\Block\\Email\\Advisories"
+    class="Corrivate\\ComposerDashboard\\Block\\Email\\Outdated"
     area="frontend"
-    template="Corrivate_ComposerDashboard::email/advisories.phtml"
+    template="Corrivate_ComposerDashboard::email/outdated.phtml"
     }}
     </tbody>
 </table>
@@ -27,7 +29,7 @@
 <br/>
 
 <p>Please check the composer dashboard in your admin panel for more details.</p>
-<p><i>System > Composer Dashboard > Security Advisories</i></p>
+<p><i>System > Composer Dashboard > Installed Packages</i></p>
 
 <br/>
 <p>With kind regards,</p>
@@ -45,5 +47,6 @@
         <td style="vertical-align: center;"><b>Composer Dashboard</b> by Corrivate</td>
     </tr>
 </table>
+
 
 {{template config_path="design/email/footer_template"}}

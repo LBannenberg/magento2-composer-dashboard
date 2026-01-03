@@ -1,0 +1,19 @@
+<?php
+
+/** @var \Corrivate\ComposerDashboard\Block\Email\Outdated $block */
+?>
+
+<?php foreach ($block->getOutdated() as $package): ?>
+    <tr>
+        <td><?= $package->package ?></td>
+        <td><?= $package->version ?></td>
+        <td><?= $package->latest ?></td>
+        <td><?= $package->latest_status ?></td>
+        <?php if($package->abandoned): ?>
+            <td><b style="color:red">abandoned</b></td>
+        <?php else: ?>
+            <td>-</td>
+        <?php endif; ?>
+
+    </tr>
+<?php endforeach; ?>
