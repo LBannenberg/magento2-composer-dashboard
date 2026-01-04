@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:View/Layout:etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:View/Layout:etc/page_configuration.xsd">
     <update handle="loki_admin_components_grid"/>
 
     <head>
@@ -12,8 +13,43 @@
                 name="corrivate.composer-dashboard.audit.grid"
                 template="Loki_AdminComponents::grid.phtml">
                 <arguments>
+                    <argument name="provider" xsi:type="string">
+                        \Corrivate\ComposerDashboard\Provider\AuditArrayProvider
+                    </argument>
+
                     <argument name="hide_actions" xsi:type="boolean">true</argument>
-                    <argument name="provider" xsi:type="string">\Corrivate\ComposerDashboard\Provider\AuditArrayProvider</argument>
+
+                    <argument name="searchable_fields" xsi:type="array">
+                        <item name="package" xsi:type="string">package</item>
+                        <item name="cve" xsi:type="string">cve</item>
+                        <item name="title" xsi:type="string">title</item>
+                    </argument>
+
+                    <argument name="grid_filters" xsi:type="array">
+                        <item name="package" xsi:type="array">
+                            <item name="label" xsi:type="string">Package</item>
+                            <item name="condition_type" xsi:type="string">like</item>
+                        </item>
+
+                        <item name="severity" xsi:type="array">
+                            <item name="label" xsi:type="string">Severity</item>
+                            <item name="field_type" xsi:type="string">select</item>
+                            <item name="condition_type" xsi:type="string">equals</item>
+                            <item name="options" xsi:type="object">\Corrivate\ComposerDashboard\ViewModel\Options\SeverityOptions</item>
+                        </item>
+
+                        <item name="cve" xsi:type="array">
+                            <item name="label" xsi:type="string">CVE</item>
+                            <item name="condition_type" xsi:type="string">like</item>
+                        </item>
+
+                        <item name="title" xsi:type="array">
+                            <item name="label" xsi:type="string">Issue</item>
+                            <item name="condition_type" xsi:type="string">like</item>
+                        </item>
+
+                    </argument>
+
                 </arguments>
             </block>
         </referenceContainer>

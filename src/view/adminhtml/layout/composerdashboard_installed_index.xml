@@ -19,8 +19,8 @@
                     <argument name="hide_actions" xsi:type="boolean">true</argument>
 
                     <argument name="searchable_fields" xsi:type="array">
-                        <item name="package" xsi:type="string">identifier</item>
-                        <item name="description" xsi:type="string">title</item>
+                        <item name="package" xsi:type="string">package</item>
+                        <item name="description" xsi:type="string">description</item>
                     </argument>
 
                     <argument name="grid_filters" xsi:type="array">
@@ -28,24 +28,28 @@
                             <item name="label" xsi:type="string">Package</item>
                             <item name="condition_type" xsi:type="string">like</item>
                         </item>
+
                         <item name="latest_status" xsi:type="array">
                             <item name="label" xsi:type="string">Upgrade Status</item>
                             <item name="field_type" xsi:type="string">select</item>
                             <item name="condition_type" xsi:type="string">equals</item>
                             <item name="options" xsi:type="object">\Corrivate\ComposerDashboard\ViewModel\Options\UpgradeOptions</item>
                         </item>
+
                         <item name="direct" xsi:type="array">
                             <item name="label" xsi:type="string">Directly Installed</item>
                             <item name="field_type" xsi:type="string">select</item>
                             <item name="condition_type" xsi:type="string">equals</item>
                             <item name="options" xsi:type="object">\Corrivate\ComposerDashboard\ViewModel\Options\DirectOptions</item>
                         </item>
+
                         <item name="abandoned" xsi:type="array">
                             <item name="label" xsi:type="string">Abandoned by package creator</item>
                             <item name="field_type" xsi:type="string">select</item>
                             <item name="condition_type" xsi:type="string">equals</item>
                             <item name="options" xsi:type="object">\Corrivate\ComposerDashboard\ViewModel\Options\AbandonedOptions</item>
                         </item>
+
                         <item name="description" xsi:type="array">
                             <item name="label" xsi:type="string">Description</item>
                             <item name="condition_type" xsi:type="string">like</item>
