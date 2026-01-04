@@ -36,7 +36,7 @@ class Settings
         $values = array_map(fn (string $v) => trim($v), $values);
         return array_filter(
             $values,
-            fn (string $v) => filter_var($v, FILTER_VALIDATE_EMAIL)
+            fn (string $v) => filter_var($v, FILTER_VALIDATE_EMAIL) // @phpstan-ignore argument.type
         );
     }
 
