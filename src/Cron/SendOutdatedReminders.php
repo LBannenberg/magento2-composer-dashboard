@@ -4,6 +4,7 @@ namespace Corrivate\ComposerDashboard\Cron;
 
 use Corrivate\ComposerDashboard\Model\Composer\InstalledPackages;
 use Corrivate\ComposerDashboard\Model\Config\Settings;
+use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\MailException;
 use Magento\Framework\Mail\Template\TransportBuilder;
@@ -30,7 +31,11 @@ class SendOutdatedReminders
             return; // Nobody listening, boo!
         }
 
-        $outdated = $this->packages->getOutdatedRows(forceRefresh: true);
+        $outdated = array_filter(
+            $this->packages->getRows(forceFresh: true),
+            fn (InstalledPackage $r) => $r->direct && $r->isOutdated()
+        );
+
         if (!$outdated) {
             return; // Everything up to date, yay!
         }

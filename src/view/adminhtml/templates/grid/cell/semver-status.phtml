@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Escaper;
 
@@ -8,12 +9,14 @@ use Magento\Framework\Escaper;
 /** @var Escaper $escaper */
 
 
-$class = match($block->getValue()) {
-    'up-to-date' => 'composer-badge--ok',
-    'semver-safe-update' => 'composer-badge--warning',
-    'update-possible' => 'composer-badge--danger',
+$class = match((int)$block->getValue()) {
+    InstalledPackage::SEMVER_UP_TO_DATE => 'composer-badge--ok',
+    InstalledPackage::SEMVER_SAFE_UPDATE => 'composer-badge--warning',
+    InstalledPackage::SEMVER_UPDATE_POSSIBLE => 'composer-badge--danger',
     default => 'composer-badge--danger'
 };
+
+$label = __(InstalledPackage::SEMVER_LABELS[$block->getValue()] ?? 'unknown');
 ?>
 
-<span class="composer-badge <?= $class ?>"><?= $escaper->escapeHtml($block->getValue())?></span>
+<span class="composer-badge <?= $class ?>"><?= $escaper->escapeHtml((string)$label) ?></span>

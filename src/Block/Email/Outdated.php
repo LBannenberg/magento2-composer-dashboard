@@ -12,15 +12,13 @@ class Outdated extends Template
         private readonly InstalledPackages $packages,
         Template\Context $context,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
     }
-
 
     /** @return InstalledPackage[] */
     public function getOutdated(): array
     {
-        return $this->packages->getOutdatedRows();
+        return array_filter($this->packages->getRows(), fn (InstalledPackage $r) => $r->direct && $r->isOutdated());
     }
 }

@@ -8,8 +8,6 @@ use Symfony\Component\Process\Process;
 
 class InstalledPackages
 {
-    /** @var string[] */
-    private array $upgradeTypes = [];
     public function __construct(
         private readonly ComposerCache $cache,
     ) {
@@ -28,30 +26,6 @@ class InstalledPackages
         return $rows;
     }
 
-    /** @return string[] */
-    public function getUpgradeTypes(): array
-    {
-        if (!$this->upgradeTypes) {
-            $this->upgradeTypes = array_unique(array_map(
-                fn (InstalledPackage $row) => $row->latest_status,
-                $this->getRows()
-            ));
-        }
-        return $this->upgradeTypes;
-    }
-
-    /** @return InstalledPackage[] */
-    public function getOutdatedRows(bool $forceRefresh = false): array
-    {
-        $rows = $this->getRows($forceRefresh);
-        // We only want to report on direct packages in composer.json
-        $rows = array_filter($rows, fn (InstalledPackage $p) => $p->direct);
-
-        // We want to report on packages known to be not up to date,
-        // as well as abandoned packages because they will never get updates anymore
-        return array_filter($rows, fn (InstalledPackage $p) => $p->latest_status != 'up-to-date' || $p->abandoned);
-    }
-
     /** @return InstalledPackage[] */
     private function getFromComposer(): array
     {
@@ -67,6 +41,10 @@ class InstalledPackages
 
         $rows = [];
         foreach ($packages as $package) {
+            if ($package['name'] === 'magento/product-community-edition') {
+                $package = $this->checkMagentoVersion($package);
+            }
+
             $install = new InstalledPackage(
                 package: $package['name'],
                 direct: $package['direct-dependency'],
@@ -76,44 +54,54 @@ class InstalledPackages
                 release_age: $package['release-age'],
                 release_date: $package['release-date'],
                 latest: $package['latest'],
-                latest_status: $package['latest-status'],
                 latest_release_date: $package['latest-release-date'],
                 description: $package['description'] ?? '',
-                abandoned: $package['abandoned']
+                abandoned: $package['abandoned'],
+                semver_status: $this->semverCodeFromComposer($package)
             );
-            if ($install->package === 'magento/product-community-edition') {
-                $install = $this->checkMagentoVersion($install);
-            }
+
             $rows[] = $install;
         }
         return $rows;
     }
 
-    private function checkMagentoVersion(InstalledPackage $install): InstalledPackage
+    private function checkMagentoVersion(array $package): array
     {
-        $current = explode('.', $install->version);
-        $current = array_merge(
-            [$current[0], $current[1]],
-            explode('-', $current[2])
-        );
+        $current = $package['version'];
+        $latest = $package['latest'];
 
-        $latest = explode('.', $install->latest);
-        $latest = array_merge(
-            [$latest[0], $latest[1]],
-            explode('-', $latest[2])
-        );
-
-        if ($current[0] == $latest[0]
-            && $current[1] == $latest[1]
-            && $current[2] == $latest[2]
-        ) {
-            // Then the only difference should be the -p version;
-            return $install;
+        if ($current === $latest) {
+            return $package;
         }
 
-        // A difference between for example Magento 2.4.7 and 2.4.8 is not a semver-safe-update!!!
-        $data = (array)$install;
-        $data['latest_status'] = 'update-possible';
-        return new InstalledPackage(...$data);
+        // Split the version tags into a #.#.# version part and optional -p# part
+        preg_match('/^(\d+\.\d+\.\d+)(?:-(p\d+))?$/', $current, $currentParts);
+        preg_match('/^(\d+\.\d+\.\d+)(?:-(p\d+))?$/', $latest, $latestParts);
+
+        if ($currentParts[1] != $latestParts[1]) {
+            // Then this is more than a patch-level difference and needs significant testing during upgrade
+            $package['latest-status'] = 'update-possible';
+            return $package;
+        }
+
+        if (($currentParts[2] ?? '') != ($latestParts[2] ?? '')) {
+            // Only difference is at a patch level
+            $package['latest-status'] = 'semver-safe-update';
+            return $package;
+        }
+
+        // One of the version strings must be quite weird
+        $package['latest-status'] = 'unknown';
+        return $package;
+    }
+
+    private function semverCodeFromComposer(array $package): int
+    {
+        return match($package['latest-status'] ?? '') {
+            'up-to-date' => InstalledPackage::SEMVER_UP_TO_DATE,
+            'semver-safe-update' => InstalledPackage::SEMVER_SAFE_UPDATE,
+            'update-possible' => InstalledPackage::SEMVER_UPDATE_POSSIBLE,
+            default => InstalledPackage::SEMVER_UNKNOWN
+        };
     }
 }

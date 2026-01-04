@@ -4,8 +4,8 @@ namespace Corrivate\ComposerDashboard\Provider;
 
 use Corrivate\ComposerDashboard\Model\Composer\InstalledPackages;
 use Corrivate\ComposerDashboard\Model\Meta\PackageAliases;
-use Loki\AdminComponents\Grid\Column\ColumnFactory;
 use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
+use Loki\AdminComponents\Grid\Column\ColumnFactory;
 
 class InstalledPackagesArrayProvider implements \Loki\AdminComponents\Provider\ArrayProviderInterface
 {
@@ -13,8 +13,7 @@ class InstalledPackagesArrayProvider implements \Loki\AdminComponents\Provider\A
         private readonly ColumnFactory     $columnFactory,
         private readonly PackageAliases    $aliases,
         private readonly InstalledPackages $installedPackages
-    )
-    {
+    ) {
     }
 
     public function getColumns(): array
@@ -29,7 +28,7 @@ class InstalledPackagesArrayProvider implements \Loki\AdminComponents\Provider\A
             $this->columnFactory->create(['code' => 'release_age', 'label' => 'Age']),
             $this->columnFactory->create(['code' => 'latest', 'label' => 'Latest Version']),
             $this->columnFactory->create([
-                'code' => 'latest_status',
+                'code' => 'semver_status',
                 'label' => 'Upgrade status',
                 'cell_template' => 'Corrivate_ComposerDashboard::grid/cell/semver-status.phtml'
             ]),

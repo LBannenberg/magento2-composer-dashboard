@@ -1,6 +1,10 @@
 <?php
 
 /** @var \Corrivate\ComposerDashboard\Block\Email\Outdated $block */
+/** @var \Magento\Framework\Escaper $escaper */
+
+use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
+
 ?>
 
 <?php foreach ($block->getOutdated() as $package): ?>
@@ -8,11 +12,11 @@
         <td><?= $package->package ?></td>
         <td><?= $package->version ?></td>
         <td><?= $package->latest ?></td>
-        <td><?= $package->latest_status ?></td>
+        <td><?= InstalledPackage::SEMVER_LABELS[$package->semver_status] ?? 'unknown' ?></td>
         <?php if($package->abandoned): ?>
             <td><b style="color:red">abandoned</b></td>
         <?php else: ?>
-            <td>-</td>
+            <td></td>
         <?php endif; ?>
 
     </tr>
