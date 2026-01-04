@@ -1,18 +1,19 @@
 <?php
 
 /** @var \Corrivate\ComposerDashboard\Block\Email\Advisories $block */
+
+use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
+
 ?>
 
 <?php foreach ($block->getAdvisories() as $advisory): ?>
     <tr>
         <td><?= $advisory->package ?></td>
         <td><?= $advisory->cve ?></td>
-        <?php if($advisory->severity == 'high' || $advisory->severity == 'critical'): ?>
-            <td><b style="color:red"><?= $advisory->severity ?></b></td>
-        <?php elseif ($advisory->severity == 'medium'): ?>
-            <td style="color:red"><?= $advisory->severity ?></td>
+        <?php if($advisory->severity >= AuditIssue::SEVERITY_MEDIUM): ?>
+            <td><?= AuditIssue::SEVERITY_LABELS[$advisory->severity] ?></td>
         <?php else: ?>
-            <td><?= $advisory->severity ?></td>
+            <td><b style="color:red"><?= AuditIssue::SEVERITY_LABELS[$advisory->severity] ?></b></td>
         <?php endif; ?>
 
     </tr>

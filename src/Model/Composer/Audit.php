@@ -47,12 +47,23 @@ class Audit
                     title: $issue['title'] ?? '(no title)',
                     cve: $issue['cve'] ?? 'unknown',
                     link: $issue['link'] ?? '',
-                    severity: $issue['severity'] ?? 'unknown',
+                    severity: $this->matchSeverity($issue['severity'] ?? 'unknown'),
                     reported: (new \DateTime($issue['reportedAt']))->format('Y-m-d H:i:s')
                 );
             }
         }
 
         return $rows;
+    }
+
+    private function matchSeverity(string $severity): string
+    {
+        return match($severity) {
+            'low' => AuditIssue::SEVERITY_LOW,
+            'medium' => AuditIssue::SEVERITY_MEDIUM,
+            'high' => AuditIssue::SEVERITY_HIGH,
+            'critical' => AuditIssue::SEVERITY_CRITICAL,
+            default => AuditIssue::SEVERITY_UNKNOWN
+        };
     }
 }
