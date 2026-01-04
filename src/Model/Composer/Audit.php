@@ -56,7 +56,7 @@ class Audit
         return $rows;
     }
 
-    private function matchSeverity(string $severity): string
+    private function matchSeverity(string $severity): int
     {
         return match($severity) {
             'low' => AuditIssue::SEVERITY_LOW,

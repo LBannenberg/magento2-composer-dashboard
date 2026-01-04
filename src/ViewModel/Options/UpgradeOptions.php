@@ -9,7 +9,7 @@ use Magento\Framework\View\Element\Block\ArgumentInterface;
 
 class UpgradeOptions implements ArgumentInterface, OptionSourceInterface
 {
-    /** @return array<array{value: string, label: string}> */
+    /** @return array<array{value: int|string, label: string}> */
     public function toOptionArray(): array
     {
         $options = [

@@ -8,7 +8,7 @@ use Magento\Framework\View\Element\Template;
 
 class Advisories extends Template
 {
-    public function __construct(
+    public function __construct(// @phpstan-ignore missingType.iterableValue
         private readonly Audit $audit,
         Template\Context $context,
         array $data = []

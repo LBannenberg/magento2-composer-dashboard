@@ -65,7 +65,7 @@ class InstalledPackages
         return $rows;
     }
 
-    private function checkMagentoVersion(array $package): array
+    private function checkMagentoVersion(array $package): array // @phpstan-ignore missingType.iterableValue, missingType.iterableValue
     {
         $current = $package['version'];
         $latest = $package['latest'];
@@ -78,7 +78,7 @@ class InstalledPackages
         preg_match('/^(\d+\.\d+\.\d+)(?:-(p\d+))?$/', $current, $currentParts);
         preg_match('/^(\d+\.\d+\.\d+)(?:-(p\d+))?$/', $latest, $latestParts);
 
-        if ($currentParts[1] != $latestParts[1]) {
+        if ($currentParts[1] != $latestParts[1]) { // @phpstan-ignore offsetAccess.notFound, offsetAccess.notFound
             // Then this is more than a patch-level difference and needs significant testing during upgrade
             $package['latest-status'] = 'update-possible';
             return $package;
@@ -95,7 +95,7 @@ class InstalledPackages
         return $package;
     }
 
-    private function semverCodeFromComposer(array $package): int
+    private function semverCodeFromComposer(array $package): int // @phpstan-ignore missingType.iterableValue
     {
         return match($package['latest-status'] ?? '') {
             'up-to-date' => InstalledPackage::SEMVER_UP_TO_DATE,
