@@ -57,10 +57,4 @@ class Settings
         return rtrim(str_replace('index.php', '', $this->url->getBaseUrl()), '/');
     }
 
-    public function getBase64Logo(): string
-    {
-        $path = __DIR__ . '/../../view/adminhtml/web/images/corrivate-32x32.png';
-        $data = base64_encode(file_get_contents($path));
-        return 'data:image/png;base64,' . $data;
-    }
 }

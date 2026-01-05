@@ -55,8 +55,7 @@ class SendOutdatedReminders
                     'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID
                 ])
                 ->setTemplateVars([
-                    'store_url' => $this->settings->getStoreUrl(),
-                    'base64_logo' => $this->settings->getBase64Logo()
+                    'store_url' => $this->settings->getStoreUrl()
                     // package information will be fetched in the block
                 ])
                 ->setFromByScope($this->settings->getSender());
