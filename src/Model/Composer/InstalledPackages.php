@@ -2,11 +2,12 @@
 
 namespace Corrivate\ComposerDashboard\Model\Composer;
 
+use Corrivate\ComposerDashboard\Api\InstalledPackagesInterface;
 use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
 use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
 use Symfony\Component\Process\Process;
 
-class InstalledPackages
+class InstalledPackages implements InstalledPackagesInterface
 {
     public function __construct(
         private readonly ComposerCache $cache,
@@ -98,5 +99,10 @@ class InstalledPackages
             'update-possible' => InstalledPackage::SEMVER_UPDATE_POSSIBLE,
             default => InstalledPackage::SEMVER_UNKNOWN
         };
+    }
+
+    public function getList(): array
+    {
+        return json_decode(json_encode($this->getRows(forceFresh: true)), true);
     }
 }

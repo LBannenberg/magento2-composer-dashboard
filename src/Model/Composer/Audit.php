@@ -2,11 +2,12 @@
 
 namespace Corrivate\ComposerDashboard\Model\Composer;
 
+use Corrivate\ComposerDashboard\Api\AuditInterface;
 use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
 use Symfony\Component\Process\Process;
 
-class Audit
+class Audit implements AuditInterface
 {
     public function __construct(
         private readonly ComposerCache $cache
@@ -66,5 +67,12 @@ class Audit
             'critical' => AuditIssue::SEVERITY_CRITICAL,
             default => AuditIssue::SEVERITY_UNKNOWN
         };
+    }
+
+
+    /** @inheritDoc */
+    public function getList(): array
+    {
+        return json_decode(json_encode($this->getRows(forceRefresh: true)), true);
     }
 }

@@ -8,4 +8,10 @@
             </argument>
         </arguments>
     </type>
+
+    <preference for="Corrivate\ComposerDashboard\Api\AuditInterface"
+                type="\Corrivate\ComposerDashboard\Model\Composer\Audit"/>
+
+    <preference for="Corrivate\ComposerDashboard\Api\InstalledPackagesInterface"
+                type="\Corrivate\ComposerDashboard\Model\Composer\InstalledPackages"/>
 </config>
