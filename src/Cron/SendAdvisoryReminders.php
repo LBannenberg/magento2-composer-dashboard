@@ -20,8 +20,7 @@ class SendAdvisoryReminders
         private readonly TransportBuilder $transportBuilder,
         private readonly StateInterface   $inlineTranslation,
         private readonly LoggerInterface  $logger
-    )
-    {
+    ) {
     }
 
     public function execute(): void
@@ -37,7 +36,6 @@ class SendAdvisoryReminders
         $this->send();
     }
 
-
     private function send(): void
     {
         $this->inlineTranslation->suspend();
@@ -50,7 +48,8 @@ class SendAdvisoryReminders
                     'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID
                 ])
                 ->setTemplateVars([
-                    'store_url' => $this->settings->getStoreUrl()
+                    'store_url' => $this->settings->getStoreUrl(),
+                    'base64_logo' => $this->settings->getBase64Logo()
                     // package information will be fetched in the block
                 ])
                 ->setFromByScope($this->settings->getSender());
