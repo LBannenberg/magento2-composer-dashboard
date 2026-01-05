@@ -23,6 +23,7 @@ readonly class AuditIssue
         public string $cve,
         public string $link,
         public int    $severity,
+        public string $severity_original,
         public string $reported
     )
     {

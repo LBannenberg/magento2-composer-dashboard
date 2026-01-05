@@ -54,6 +54,7 @@ class InstalledPackages
                 release_age: $package['release-age'],
                 release_date: $package['release-date'],
                 latest: $package['latest'],
+                latest_status: $package['latest-status'],
                 latest_release_date: $package['latest-release-date'],
                 description: $package['description'] ?? '',
                 abandoned: $package['abandoned'],

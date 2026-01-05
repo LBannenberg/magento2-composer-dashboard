@@ -48,6 +48,7 @@ class Audit
                     cve: $issue['cve'] ?? 'unknown',
                     link: $issue['link'] ?? '',
                     severity: $this->matchSeverity($issue['severity'] ?? 'unknown'),
+                    severity_original: $issue['severity'] ?? 'unknown',
                     reported: (new \DateTime($issue['reportedAt']))->format('Y-m-d H:i:s')
                 );
             }

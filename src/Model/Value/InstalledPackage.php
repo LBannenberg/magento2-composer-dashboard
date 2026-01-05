@@ -24,6 +24,7 @@ readonly class InstalledPackage
         public string $release_age,
         public string $release_date,
         public string $latest,
+        public string $latest_status,
         public string $latest_release_date,
         public string $description,
         public bool   $abandoned,
