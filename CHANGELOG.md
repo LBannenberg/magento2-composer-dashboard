@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2
+### Fixed
+* Fix incorrect field used for filter on installed packages grid
+
 ## 0.4.1
 ### Fixed
 * Removed broken-link logo from emails
