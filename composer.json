@@ -9,7 +9,7 @@
             "email": "lau.bannenberg@gmail.com"
         }
     ],
-    "version": "0.4.1",
+    "version": "0.4.2",
     "require": {
         "loki/magento2-admin-components": "^0.4.2"
     },
