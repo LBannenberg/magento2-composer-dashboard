@@ -42,7 +42,7 @@ class InstalledPackages
         $rows = [];
         foreach ($packages as $package) {
             if ($package['name'] === 'magento/product-community-edition') {
-                $package = $this->checkMagentoVersion($package);
+                $package['latest-status'] = $this->checkMagentoVersion($package['version'], $package['latest']);
             }
 
             $install = new InstalledPackage(
@@ -57,7 +57,7 @@ class InstalledPackages
                 latest_release_date: $package['latest-release-date'],
                 description: $package['description'] ?? '',
                 abandoned: $package['abandoned'],
-                semver_status: $this->semverCodeFromComposer($package)
+                semver_status: $this->semverCodeFromComposer($package['latest-status'])
             );
 
             $rows[] = $install;
@@ -65,13 +65,10 @@ class InstalledPackages
         return $rows;
     }
 
-    private function checkMagentoVersion(array $package): array // @phpstan-ignore missingType.iterableValue, missingType.iterableValue
+    private function checkMagentoVersion(string $current, string $latest): string
     {
-        $current = $package['version'];
-        $latest = $package['latest'];
-
         if ($current === $latest) {
-            return $package;
+            return 'up-to-date';
         }
 
         // Split the version tags into a #.#.# version part and optional -p# part
@@ -80,24 +77,21 @@ class InstalledPackages
 
         if ($currentParts[1] != $latestParts[1]) { // @phpstan-ignore offsetAccess.notFound, offsetAccess.notFound
             // Then this is more than a patch-level difference and needs significant testing during upgrade
-            $package['latest-status'] = 'update-possible';
-            return $package;
+            return 'update-possible';
         }
 
         if (($currentParts[2] ?? '') != ($latestParts[2] ?? '')) {
             // Only difference is at a patch level
-            $package['latest-status'] = 'semver-safe-update';
-            return $package;
+            return 'semver-safe-update';
         }
 
         // One of the version strings must be quite weird
-        $package['latest-status'] = 'unknown';
-        return $package;
+        return 'unknown';
     }
 
-    private function semverCodeFromComposer(array $package): int // @phpstan-ignore missingType.iterableValue
+    private function semverCodeFromComposer(string $latestStatus): int
     {
-        return match($package['latest-status'] ?? '') {
+        return match($latestStatus) {
             'up-to-date' => InstalledPackage::SEMVER_UP_TO_DATE,
             'semver-safe-update' => InstalledPackage::SEMVER_SAFE_UPDATE,
             'update-possible' => InstalledPackage::SEMVER_UPDATE_POSSIBLE,
