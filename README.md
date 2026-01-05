@@ -1,12 +1,12 @@
-<div style="display: flex; align-items: start; justify-content: start;">
-  <div style="display: flex; align-items: center;">
-    <img src="docs/corrivate-128x128.png" alt="Corrivate Logo" width="128" height="128" style="margin-right: 15px;">
-    <div>
-      <h1 style="margin: 0px;">Magento 2 Composer Dashboard</h1>
+<table>
+  <tr>
+    <td><img src="docs/corrivate-128x128.png" alt="Corrivate Logo" width="128" height="128"></td>
+    <td>
+      <h1>Magento 2 Composer Dashboard</h1>
       <p>by Corrivate</p>
-    </div>
-  </div>
-</div>
+    </td>
+  </tr>
+</table>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/corrivate/magento2-composer-dashboard?color=blue)](https://packagist.org/packages/corrivate/magento2-composer-dashboard)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
