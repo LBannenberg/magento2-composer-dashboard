@@ -32,7 +32,7 @@ class SendOutdatedReminders
         }
 
         $outdated = array_filter(
-            $this->packages->getRows(forceFresh: false),
+            $this->packages->getRows(forceFresh: true),
             fn (InstalledPackage $r) => $r->direct && $r->isOutdated()
         );
 
