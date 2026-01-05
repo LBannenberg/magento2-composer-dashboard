@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+### Fixed
+* Github friendly README.md header
+
 ## 0.3.0
 ### Added
 * Setup script to initially enable the cache 
