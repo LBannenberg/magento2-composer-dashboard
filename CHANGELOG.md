@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+### Added
+* Setup script to initially enable the cache 
+
 ## 0.2.0
 ### Added
 * Added filtering to security advisory grid

@@ -1,9 +1,15 @@
-# Magento 2 Composer Dashboard
+<div style="display: flex; align-items: start; justify-content: start;">
+  <div style="display: flex; align-items: center;">
+    <img src="docs/corrivate-128x128.png" alt="Corrivate Logo" width="128" height="128" style="margin-right: 15px;">
+    <div>
+      <h1 style="margin: 0px;">Magento 2 Composer Dashboard</h1>
+      <p>by Corrivate</p>
+    </div>
+  </div>
+</div>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/corrivate/magento2-composer-dashboard?color=blue)](https://packagist.org/packages/corrivate/magento2-composer-dashboard)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
-
-By `Corrivate`
 
 ## Introduction
 
@@ -12,6 +18,10 @@ This module provides a dashboard inside the Magento admin to view your composer 
 * Are there any security advisories for these packages?
 
 Under the hood it uses Composer to fetch the data, but it exposes that data in a way that's friendlier for merchants, project managers etc. to review.
+
+Additionally, you can:
+* Configure email addresses to receive a daily reminder about security advisories against your installed packages.
+* Configure email addresses to receive a weekly reminder about directly installed packages in need of upgrading. 
 
 ## Installation
 
@@ -29,14 +39,6 @@ This should add the following to your `app/etc/config.php`:
 'Loki_Base' => 1,
 'Loki_Components' => 1,
 'Loki_AdminComponents' => 1,
-```
-
-### Enable the dashboard cache
-
-Because fetching package version information through composer takes some time, we cache the results. You should enable that cache with:
-
-```bash
-bin/magento cache:enable corrivate_composerdashboard
 ```
 
 ### Permissions
@@ -60,6 +62,10 @@ This uses `composer show` to gather information about all your installed (non-de
 
 Note that the latest version reported here is the latest version *you have access to*. It's possible that for some (private/third party) packages there are newer versions that you don't have access to, for example because you'd need to renew your subscription. Unfortunately there's no universal way to check that through Composer.
 
+### Configuring reminder emails
+
+In your Stores > Configuration > Advanced > Composer Dashboard tab, you can configure which email addresses should receive reminders about packages that need attention.
+
 
 ## Advanced
 
@@ -78,7 +84,7 @@ Some vendors use commercial names for packages that are quite different than the
 ```
 
 ## Known Issues
-* Filters in the installed packages grid don't work. This feature is not fully implemented yet in the Loki Admin Components.
+* Filters in the grids don't work. This feature is not fully implemented yet in the Loki Admin Components.
 
 ## Corrivate
 (en.wiktionary.org)
