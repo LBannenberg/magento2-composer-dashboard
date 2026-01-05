@@ -19,6 +19,8 @@ class Outdated extends Template
     /** @return InstalledPackage[] */
     public function getOutdated(): array
     {
-        return array_filter($this->packages->getRows(), fn (InstalledPackage $r) => $r->direct && $r->isOutdated());
+        $rows = array_filter($this->packages->getRows(), fn (InstalledPackage $r) => $r->direct && $r->isOutdated());
+        usort($rows, fn (InstalledPackage $a, InstalledPackage $b) => $a->semver_status <=> $b->semver_status);
+        return $rows;
     }
 }

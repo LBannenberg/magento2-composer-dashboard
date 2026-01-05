@@ -12,15 +12,15 @@ class Advisories extends Template
         private readonly Audit $audit,
         Template\Context $context,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $data);
     }
-
 
     /** @return AuditIssue[] */
     public function getAdvisories(): array
     {
-        return $this->audit->getRows();
+        $rows = $this->audit->getRows();
+        usort($rows, fn (AuditIssue $a, AuditIssue $b) => $a->severity <=> $b->severity);
+        return $rows;
     }
 }
