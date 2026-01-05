@@ -4,8 +4,9 @@
     <template id="corrivate_composer_security_advisories" label="Composer Security Advisories"
               file="composer_security_advisories.html" type="html" module="Corrivate_ComposerDashboard"
               area="adminhtml"/>
+
     <template id="corrivate_composer_outdated_packages" label="Corrivate Composer Outdated Packages"
               file="composer_outdated_packages.html" type="html" module="Corrivate_ComposerDashboard"
-              area="frontend"/>
+              area="adminhtml"/>
 </config>
 

@@ -2,14 +2,17 @@
 
 namespace Corrivate\ComposerDashboard\Model\Config;
 
+use Magento\Backend\Model\UrlInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class Settings
 {
     private const ADVISORY_RECIPIENTS = 'corrivate_composer_dashboard/security_advisories/recipients';
     private const OUTDATED_RECIPIENTS = 'corrivate_composer_dashboard/outdated_packages/recipients';
+
     public function __construct(
-        private readonly ScopeConfigInterface $scopeConfig
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly UrlInterface $url
     ) {
     }
 
@@ -47,5 +50,10 @@ class Settings
             'email' => (string)$this->scopeConfig->getValue('trans_email/ident_general/email'),
             'name' => (string)$this->scopeConfig->getValue('trans_email/ident_general/name')
         ];
+    }
+
+    public function getStoreUrl(): string
+    {
+        return rtrim(str_replace('index.php', '', $this->url->getBaseUrl()), '/');
     }
 }

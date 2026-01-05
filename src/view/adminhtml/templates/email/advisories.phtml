@@ -1,13 +1,14 @@
 <?php
 
-/** @var \Corrivate\ComposerDashboard\Block\Email\Advisories $block */
+/** @var \Corrivate\ComposerDashboard\Block\Adminhtml\Email\Advisories $block
+ */
 
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
 
 ?>
 
 <?php foreach ($block->getAdvisories() as $advisory): ?>
-    <tr>
+    <tr style="font-size:14px;">
         <td><?= $advisory->package ?></td>
         <td><?= $advisory->cve ?></td>
         <?php if($advisory->severity >= AuditIssue::SEVERITY_MEDIUM): ?>

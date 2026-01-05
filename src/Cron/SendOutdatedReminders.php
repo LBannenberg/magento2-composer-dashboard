@@ -32,7 +32,7 @@ class SendOutdatedReminders
         }
 
         $outdated = array_filter(
-            $this->packages->getRows(forceFresh: true),
+            $this->packages->getRows(forceFresh: false),
             fn (InstalledPackage $r) => $r->direct && $r->isOutdated()
         );
 
@@ -51,10 +51,13 @@ class SendOutdatedReminders
             $this->transportBuilder
                 ->setTemplateIdentifier(self::TEMPLATE)
                 ->setTemplateOptions([
-                    'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+                    'area' => \Magento\Framework\App\Area::AREA_ADMINHTML,
                     'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID
                 ])
-                ->setTemplateVars([]) // fetched in the block
+                ->setTemplateVars([
+                    'store_url' => $this->settings->getStoreUrl()
+                    // package information will be fetched in the block
+                ])
                 ->setFromByScope($this->settings->getSender());
             foreach ($this->settings->getOutdatedRecipients() as $recipient) {
                 $this->transportBuilder->addTo($recipient);

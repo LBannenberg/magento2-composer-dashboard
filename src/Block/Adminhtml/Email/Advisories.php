@@ -1,6 +1,6 @@
 <?php
 
-namespace Corrivate\ComposerDashboard\Block\Email;
+namespace Corrivate\ComposerDashboard\Block\Adminhtml\Email;
 
 use Corrivate\ComposerDashboard\Model\Composer\Audit;
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;

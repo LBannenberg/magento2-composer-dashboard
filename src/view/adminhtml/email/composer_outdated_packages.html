@@ -1,0 +1,51 @@
+<!--@subject {{trans "You have outdated packages for"}} {{var store_url}} @-->
+<!--@vars {} @-->
+
+<div style="font-family:Arial,sans-serif; padding:16px;">
+
+    <p>Notice!</p>
+    <p>Some of your composer packages for your store <strong>{{var store.getFrontendName()}}</strong> at {{var store_url}} are outdated or abandoned:</p>
+
+    <table style="width: 100%;">
+        <thead>
+        <tr>
+            <th style="text-align: left">package</th>
+            <th style="text-align: right">current</th>
+            <th style="text-align: right">latest</th>
+            <th style="text-align: right">status</th>
+            <th><!-- abandoned --></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{block
+        class="Corrivate\\ComposerDashboard\\Block\\Adminhtml\\Email\\Outdated"
+        area="adminhtml"
+        template="Corrivate_ComposerDashboard::email/outdated.phtml"
+        }}
+        </tbody>
+    </table>
+
+    <br/>
+    <br/>
+
+    <p>Please check the composer dashboard in your admin panel for more details.</p>
+    <p><i>System > Composer Dashboard > Installed Packages</i></p>
+
+    <br/>
+    <p>With kind regards,</p>
+
+    <!-- Logo at the bottom -->
+    <table style="margin-top: 20px; width: 100%;">
+        <tr>
+            <td style="text-align: center; width:36px">
+                <img
+                    src="{{view url='Corrivate_ComposerDashboard::images/corrivate-32x32.png'}}"
+                    alt="Logo"
+                    style="display: block; width: 24px; height: 24px;"
+                />
+            </td>
+            <td style="vertical-align: center;"><b>Composer Dashboard</b> by Corrivate</td>
+        </tr>
+    </table>
+
+</div>
