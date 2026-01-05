@@ -29,7 +29,7 @@
                             <item name="condition_type" xsi:type="string">like</item>
                         </item>
 
-                        <item name="latest_status" xsi:type="array">
+                        <item name="semver_status" xsi:type="array">
                             <item name="label" xsi:type="string">Upgrade Status</item>
                             <item name="field_type" xsi:type="string">select</item>
                             <item name="condition_type" xsi:type="string">equals</item>
