@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+### Added
+* API endpoints to enable central monitoring of installed packages & advisories
+
 ## 0.3.1
 ### Fixed
 * Github friendly README.md header

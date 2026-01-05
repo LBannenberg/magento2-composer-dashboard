@@ -66,6 +66,13 @@ Note that the latest version reported here is the latest version *you have acces
 
 In your Stores > Configuration > Advanced > Composer Dashboard tab, you can configure which email addresses should receive reminders about packages that need attention.
 
+## API endpoints
+
+This module also provides API endpoints (again, gated by the same ACL permission) to enable centralized dependency monitoring:
+
+* GET `/V1/composerDashboard/audit`
+* GET `/V1/composerDashboard/installed`
+
 
 ## Advanced
 
