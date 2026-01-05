@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+### Fixed
+* Removed broken-link logo from emails
+
 ## 0.4.0
 ### Added
 * API endpoints to enable central monitoring of installed packages & advisories
