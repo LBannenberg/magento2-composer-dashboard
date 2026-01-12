@@ -80,6 +80,6 @@ class Audit implements AuditInterface
         if (!$this->settings->isApiEnabled()) {
             throw new LocalizedException(__("Composer Dashboard API is not enabled in the configuration."));
         }
-        return json_decode(json_encode($this->getRows(forceRefresh: true)), true);
+        return json_decode(json_encode($this->getRows()), true);
     }
 }

@@ -4,6 +4,8 @@
 ### Added
 * Configuration to enable/disable API access
 * Configuration to decide reminder email frequency
+### Changed
+* Using the API no longer bypasses the composer dashboard cache
 ### Fixed
 * Filtering the grids now works (newer version of Loki Admin Components).
 
