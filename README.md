@@ -73,6 +73,7 @@ This module also provides API endpoints (again, gated by the same ACL permission
 * GET `/V1/composerDashboard/audit`
 * GET `/V1/composerDashboard/installed`
 
+Note that you must opt in to these API endpoints in the module configuration.
 
 ## Advanced
 
@@ -89,9 +90,6 @@ Some vendors use commercial names for packages that are quite different than the
         </arguments>
     </type>
 ```
-
-## Known Issues
-* Filters in the grids don't work. This feature is not fully implemented yet in the Loki Admin Components.
 
 ## Corrivate
 (en.wiktionary.org)

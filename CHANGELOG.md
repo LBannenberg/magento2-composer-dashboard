@@ -3,6 +3,8 @@
 ## 0.5.0
 ### Added
 * Configuration to enable/disable API access
+### Improved
+* Now based on version of Loki Admin Components that allows filtering the grid.
 
 ## 0.4.2
 ### Fixed

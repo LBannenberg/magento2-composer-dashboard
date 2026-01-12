@@ -11,7 +11,7 @@
     ],
     "version": "0.4.2",
     "require": {
-        "loki/magento2-admin-components": "^0.4.2"
+        "loki/magento2-admin-components": "^0.4.4"
     },
     "autoload": {
         "files": [
