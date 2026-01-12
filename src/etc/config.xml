@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <default>
+        <corrivate_composer_dashboard>
+            <security_advisories>
+                <cron_frequency>0 3 * * *</cron_frequency>
+            </security_advisories>
+
+            <outdated_packages>
+                <cron_frequency>0 3 * * 1</cron_frequency>
+            </outdated_packages>
+
+            <api>
+                <enabled>0</enabled>
+            </api>
+        </corrivate_composer_dashboard>
+    </default>
+</config>

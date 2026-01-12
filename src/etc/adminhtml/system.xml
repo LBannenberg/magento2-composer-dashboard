@@ -15,7 +15,7 @@
                 <label>Security Advisories</label>
                 <comment>
                     <![CDATA[
-                    You can subscribe to daily reminders about security advisories for your composer packages.
+                    You can subscribe to reminders about security advisories for your composer packages.
                     ]]>
                 </comment>
 
@@ -27,6 +27,13 @@
                         <![CDATA[<span style="color:DarkOrange;">Use comma-separated email addresses</span>]]>
                     </comment>
                 </field>
+
+
+                <field id="cron_frequency" translate="label" type="select" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Frequency</label>
+                    <source_model>\Corrivate\ComposerDashboard\Model\Config\Source\CronSchedule</source_model>
+                </field>
             </group>
 
 
@@ -34,7 +41,7 @@
                 <label>Outdated Packages</label>
                 <comment>
                     <![CDATA[
-                     You can subscribe to weekly reminders about outdated composer packages.
+                     You can subscribe to reminders about outdated composer packages.
                      We will only send emails about directly installed packages.
                     ]]>
                 </comment>
@@ -45,6 +52,12 @@
                     <comment>
                         <![CDATA[<span style="color:DarkOrange;">Use comma-separated email addresses</span>]]>
                     </comment>
+                </field>
+
+                <field id="cron_frequency" translate="label" type="select" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Frequency</label>
+                    <source_model>\Corrivate\ComposerDashboard\Model\Config\Source\CronSchedule</source_model>
                 </field>
             </group>
 

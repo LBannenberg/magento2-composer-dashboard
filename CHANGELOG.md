@@ -3,8 +3,9 @@
 ## 0.5.0
 ### Added
 * Configuration to enable/disable API access
-### Improved
-* Now based on version of Loki Admin Components that allows filtering the grid.
+* Configuration to decide reminder email frequency
+### Fixed
+* Filtering the grids now works (newer version of Loki Admin Components).
 
 ## 0.4.2
 ### Fixed
@@ -31,7 +32,7 @@
 * Added filtering to security advisory grid
 * Can configure daily warning emails about security advisories and weekly emails about possible updates
 
-### Improved
+### Fixed
 * CVEs and update status are now sortable by priority instead of alphabetical
 * Better handling of composer results with empty fields 
 
