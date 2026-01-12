@@ -4,14 +4,18 @@ namespace Corrivate\ComposerDashboard\Model\Composer;
 
 use Corrivate\ComposerDashboard\Api\AuditInterface;
 use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
+use Corrivate\ComposerDashboard\Model\Config\Settings;
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
+use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Process\Process;
 
 class Audit implements AuditInterface
 {
     public function __construct(
-        private readonly ComposerCache $cache
-    ) {
+        private readonly ComposerCache $cache,
+        private readonly Settings      $settings
+    )
+    {
     }
 
     /** @return AuditIssue[] */
@@ -60,7 +64,7 @@ class Audit implements AuditInterface
 
     private function matchSeverity(string $severity): int
     {
-        return match($severity) {
+        return match ($severity) {
             'low' => AuditIssue::SEVERITY_LOW,
             'medium' => AuditIssue::SEVERITY_MEDIUM,
             'high' => AuditIssue::SEVERITY_HIGH,
@@ -73,6 +77,9 @@ class Audit implements AuditInterface
     /** @inheritDoc */
     public function getList(): array
     {
+        if (!$this->settings->isApiEnabled()) {
+            throw new LocalizedException(__("Composer Dashboard API is not enabled in the configuration."));
+        }
         return json_decode(json_encode($this->getRows(forceRefresh: true)), true);
     }
 }

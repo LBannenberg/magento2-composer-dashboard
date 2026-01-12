@@ -7,8 +7,9 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class Settings
 {
-    private const ADVISORY_RECIPIENTS = 'corrivate_composer_dashboard/security_advisories/recipients';
-    private const OUTDATED_RECIPIENTS = 'corrivate_composer_dashboard/outdated_packages/recipients';
+    private const XPATH_ADVISORY_RECIPIENTS = 'corrivate_composer_dashboard/security_advisories/recipients';
+    private const XPATH_OUTDATED_RECIPIENTS = 'corrivate_composer_dashboard/outdated_packages/recipients';
+    private const XPATH_API_ENABLED = 'corrivate_composer_dashboard/api/enabled';
 
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig,
@@ -19,13 +20,13 @@ class Settings
     /** @return string[] */
     public function getAdvisoryRecipients(): array
     {
-        return $this->getCommaSeparatedEmails(self::ADVISORY_RECIPIENTS);
+        return $this->getCommaSeparatedEmails(self::XPATH_ADVISORY_RECIPIENTS);
     }
 
     /** @return string[] */
     public function getOutdatedRecipients(): array
     {
-        return $this->getCommaSeparatedEmails(self::OUTDATED_RECIPIENTS);
+        return $this->getCommaSeparatedEmails(self::XPATH_OUTDATED_RECIPIENTS);
     }
 
     /** @return string[] */
@@ -57,4 +58,8 @@ class Settings
         return rtrim(str_replace('index.php', '', $this->url->getBaseUrl()), '/');
     }
 
+    public function isApiEnabled(): bool
+    {
+        return (bool)$this->scopeConfig->getValue(self::XPATH_API_ENABLED);
+    }
 }

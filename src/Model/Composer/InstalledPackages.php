@@ -4,13 +4,16 @@ namespace Corrivate\ComposerDashboard\Model\Composer;
 
 use Corrivate\ComposerDashboard\Api\InstalledPackagesInterface;
 use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
+use Corrivate\ComposerDashboard\Model\Config\Settings;
 use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
+use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Process\Process;
 
 class InstalledPackages implements InstalledPackagesInterface
 {
     public function __construct(
         private readonly ComposerCache $cache,
+        private readonly Settings      $settings
     ) {
     }
 
@@ -103,6 +106,9 @@ class InstalledPackages implements InstalledPackagesInterface
 
     public function getList(): array
     {
+        if(!$this->settings->isApiEnabled()) {
+            throw new LocalizedException(__("Composer Dashboard API is not enabled in the configuration."));
+        }
         return json_decode(json_encode($this->getRows(forceFresh: true)), true);
     }
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+### Added
+* Configuration to enable/disable API access
+
 ## 0.4.2
 ### Fixed
 * Fix incorrect field used for filter on installed packages grid

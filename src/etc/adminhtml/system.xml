@@ -47,6 +47,21 @@
                     </comment>
                 </field>
             </group>
+
+            <group id="api" translate="label,comment" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>API</label>
+                <field id="enabled" translate="label" type="select" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Enabled</label>
+                    <comment>
+                        <![CDATA[
+                            <p>Allows retrieving security and installed package data through the Magento API.</p>
+                            <p><span style="color:DarkOrange;">Note</span> The API user will also need the correct role/permission.</p>
+                        ]]>
+                    </comment>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+            </group>
         </section>
     </system>
 </config>
