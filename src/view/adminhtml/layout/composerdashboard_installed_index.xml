@@ -8,6 +8,9 @@
 
     <body>
         <referenceContainer name="content">
+            <block name="corrivate.composer-dashboard.installed-packages.preamble"
+                   template="Corrivate_ComposerDashboard::grid/installed/preamble.phtml"/>
+
             <block
                 name="corrivate.composer-dashboard.installed-packages.grid"
                 template="Loki_AdminComponents::grid.phtml">
