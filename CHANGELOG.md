@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1
+### Updated
+* Compatible with loki/magento2-admin-components 0.5.x
+
 ## 0.5.0
 ### Added
 * Configuration to enable/disable API access
