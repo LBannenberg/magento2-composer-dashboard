@@ -19,10 +19,17 @@ This module provides a dashboard inside the Magento admin to view your composer 
 
 Under the hood it uses Composer to fetch the data, but it exposes that data in a way that's friendlier for merchants, project managers etc. to review.
 
+![Dashboard with security advisories](docs/advisories-dashboard.png)
+![Dashboard with installed packages](docs/installed-dashboard.png)
+
+
 Additionally, you can:
 * Configure email addresses to receive a daily/weekly reminder about security advisories against your installed packages.
 * Configure email addresses to receive a daily/weekly reminder about directly installed packages in need of upgrading. 
 * Use the Magento API to check up on package status (for example, from an agency dashboard).
+
+![Reminder email about security advisories](docs/advisories-email.png)
+![Reminder email about outdated packages](docs/outdated-email.png)
 
 ## Installation
 
