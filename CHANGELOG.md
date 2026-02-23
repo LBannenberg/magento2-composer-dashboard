@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0
+### Added
+* You can now ignore packages in reminder emails, for example if Magento is stuck on an old version.
+### Updated
+* Compatible with loki/magento2-admin-components 0.6.x
+
+
 ## 0.5.1
 ### Updated
 * Compatible with loki/magento2-admin-components 0.5.x

@@ -34,6 +34,12 @@
                     <label>Frequency</label>
                     <source_model>\Corrivate\ComposerDashboard\Model\Config\Source\CronSchedule</source_model>
                 </field>
+
+                <field id="ignored_packages" translate="label" type="textarea" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Ignored Packages</label>
+                    <comment>These packages won't be included in reminder emails. Separate with newlines.</comment>
+                </field>
             </group>
 
 
@@ -58,6 +64,12 @@
                        showInStore="0">
                     <label>Frequency</label>
                     <source_model>\Corrivate\ComposerDashboard\Model\Config\Source\CronSchedule</source_model>
+                </field>
+
+                <field id="ignored_packages" translate="label" type="textarea" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Ignored Packages</label>
+                    <comment>These packages won't be included in reminder emails. Separate with newlines.</comment>
                 </field>
             </group>
 

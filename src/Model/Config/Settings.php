@@ -8,7 +8,9 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 class Settings
 {
     private const XPATH_ADVISORY_RECIPIENTS = 'corrivate_composer_dashboard/security_advisories/recipients';
+    private const XPATH_ADVISORY_IGNORED_PACKAGES = 'corrivate_composer_dashboard/security_advisories/ignored_packages';
     private const XPATH_OUTDATED_RECIPIENTS = 'corrivate_composer_dashboard/outdated_packages/recipients';
+    private const XPATH_OUTDATED_IGNORED_PACKAGES = 'corrivate_composer_dashboard/outdated_packages/ignored_packages';
     private const XPATH_API_ENABLED = 'corrivate_composer_dashboard/api/enabled';
 
     public function __construct(
@@ -61,5 +63,27 @@ class Settings
     public function isApiEnabled(): bool
     {
         return (bool)$this->scopeConfig->getValue(self::XPATH_API_ENABLED);
+    }
+
+    /** return string[] */
+    public function getIgnoredAdvisories(): array
+    {
+        $value = (string)$this->scopeConfig->getValue(self::XPATH_ADVISORY_IGNORED_PACKAGES);
+        $value = str_replace("\n", "", $value);
+        $value = str_replace(",", "\n", $value);
+        $items = explode("\n", $value);
+        $items = array_map(fn ($item) => trim($item), $items);
+        return array_filter($items);
+    }
+
+    /** return string[] */
+    public function getIgnoredOutdated(): array
+    {
+        $value = (string)$this->scopeConfig->getValue(self::XPATH_OUTDATED_IGNORED_PACKAGES);
+        $value = str_replace("\r", "", $value);
+        $value = str_replace(",", "\n", $value);
+        $items = explode("\n", $value);
+        $items = array_map(fn ($item) => trim($item), $items);
+        return array_filter($items);
     }
 }
