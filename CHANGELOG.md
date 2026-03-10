@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.1
+### Fixed
+* Handle null latest_release_date in composer output.
+* Don't send reminder emails if all reportable packages were ignored.
+
 ## 0.6.0
 ### Added
 * You can now ignore packages in reminder emails, for example if Magento is stuck on an old version.
