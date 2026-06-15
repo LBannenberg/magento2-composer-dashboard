@@ -1,5 +1,9 @@
 # Changelog
 
+## Unversioned
+### Added
+* SECURITY.md
+
 ## 0.6.2
 ### Fixed
 * PHPStan level 8
