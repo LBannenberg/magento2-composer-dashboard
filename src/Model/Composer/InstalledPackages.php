@@ -7,10 +7,18 @@ use Corrivate\ComposerDashboard\Model\Cache\ComposerCache;
 use Corrivate\ComposerDashboard\Model\Config\Settings;
 use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
 use Magento\Framework\Exception\LocalizedException;
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 class InstalledPackages implements InstalledPackagesInterface
 {
+    /**
+     * `show --latest` queries every configured repository. Measured at 149s on an
+     * installation with ~690 packages across 15 repositories; the Symfony default of
+     * 60s guarantees a ProcessTimedOutException there.
+     */
+    private const TIMEOUT = 900;
+
     public function __construct(
         private readonly ComposerCache $cache,
         private readonly Settings      $settings
@@ -23,6 +31,7 @@ class InstalledPackages implements InstalledPackagesInterface
         $rows = $this->cache->loadInstalledPackages();
 
         if ($rows === null || $forceFresh) {
+            // Not caught on purpose: a failed run must never be cached as an empty list.
             $rows = $this->getFromComposer();
             $this->cache->saveInstalledPackages($rows);
         }
@@ -33,36 +42,59 @@ class InstalledPackages implements InstalledPackagesInterface
     /** @return InstalledPackage[] */
     private function getFromComposer(): array
     {
-        $command = 'vendor/bin/composer show --format=json --no-dev --latest';
-
-        $process = new Process(explode(' ', $command));
+        $process = new Process([
+            'vendor/bin/composer',
+            'show',
+            '--format=json',
+            '--no-dev',
+            '--latest',
+            '--no-interaction',
+            '--no-plugins',
+            '--no-scripts',
+        ]);
         $process->setWorkingDirectory(BP); // @phpstan-ignore constant.notFound
+        $process->setTimeout(self::TIMEOUT);
         $process->run();
 
-        $output = $process->getOutput();
-        $json = json_decode($output, true);
-        $packages = $json['installed'] ?? [];
+        $json = json_decode($process->getOutput(), true);
+
+        // A failed run produces empty stdout, which must be told apart from a
+        // successful run: silently returning [] would be cached as "nothing installed".
+        if (!is_array($json) || !array_key_exists('installed', $json)) {
+            throw new RuntimeException(sprintf(
+                'composer show failed (exit code %s): %s',
+                var_export($process->getExitCode(), true),
+                trim($process->getErrorOutput()) ?: 'no error output'
+            ));
+        }
+
+        $packages = is_array($json['installed']) ? $json['installed'] : [];
 
         $rows = [];
         foreach ($packages as $package) {
-            if ($package['name'] === 'magento/product-community-edition') {
-                $package['latest-status'] = $this->checkMagentoVersion($package['version'], $package['latest']);
+            if (($package['name'] ?? null) === 'magento/product-community-edition') {
+                $package['latest-status'] = $this->checkMagentoVersion(
+                    (string)$package['version'],
+                    (string)$package['latest']
+                );
             }
 
+            // `abandoned` is `true` OR the replacement package name (ShowCommand.php),
+            // so it must be cast rather than passed straight into a bool parameter.
             $install = new InstalledPackage(
-                package: $package['name'],
-                direct: $package['direct-dependency'],
-                homepage: $package['homepage'] ?? '',
-                source: $package['source'] ?? '',
-                version: $package['version'],
-                release_age: $package['release-age'],
-                release_date: $package['release-date'],
-                latest: $package['latest'],
-                latest_status: $package['latest-status'],
-                latest_release_date: $package['latest-release-date'] ?? '',
-                description: $package['description'] ?? '',
-                abandoned: $package['abandoned'],
-                semver_status: $this->semverCodeFromComposer($package['latest-status'])
+                package: (string)$package['name'],
+                direct: (bool)($package['direct-dependency'] ?? false),
+                homepage: (string)($package['homepage'] ?? ''),
+                source: (string)($package['source'] ?? ''),
+                version: (string)$package['version'],
+                release_age: (string)($package['release-age'] ?? ''),
+                release_date: (string)($package['release-date'] ?? ''),
+                latest: (string)($package['latest'] ?? ''),
+                latest_status: (string)($package['latest-status'] ?? 'unknown'),
+                latest_release_date: (string)($package['latest-release-date'] ?? ''),
+                description: (string)($package['description'] ?? ''),
+                abandoned: (bool)($package['abandoned'] ?? false),
+                semver_status: $this->semverCodeFromComposer((string)($package['latest-status'] ?? 'unknown'))
             );
 
             $rows[] = $install;
@@ -77,10 +109,16 @@ class InstalledPackages implements InstalledPackagesInterface
         }
 
         // Split the version tags into a #.#.# version part and optional -p# part
-        preg_match('/^(\d+\.\d+\.\d+)(?:-(p\d+))?$/', $current, $currentParts);
-        preg_match('/^(\d+\.\d+\.\d+)(?:-(p\d+))?$/', $latest, $latestParts);
+        $currentMatched = preg_match('/^(\d+\.\d+\.\d+)(?:-(p\d+))?$/', $current, $currentParts);
+        $latestMatched = preg_match('/^(\d+\.\d+\.\d+)(?:-(p\d+))?$/', $latest, $latestParts);
 
-        if ($currentParts[1] != $latestParts[1]) { // @phpstan-ignore offsetAccess.notFound, offsetAccess.notFound
+        // Pre-release tags such as 2.4.9-beta1 do not match; without this guard the
+        // reads below emit "Undefined array key 1" warnings and compare null to null.
+        if ($currentMatched !== 1 || $latestMatched !== 1) {
+            return 'unknown';
+        }
+
+        if ($currentParts[1] != $latestParts[1]) {
             // Then this is more than a patch-level difference and needs significant testing during upgrade
             return 'update-possible';
         }

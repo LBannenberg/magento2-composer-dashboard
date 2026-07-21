@@ -2,9 +2,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="default">
+        <!--
+            Every 15 minutes rather than every minute. The cache lives for 24h, so a
+            per-minute schedule adds 1440 rows/day to cron_schedule for at most one
+            useful run, and after a cache flush it retries a multi-minute composer call
+            every single minute until it succeeds.
+        -->
         <job name="corrivate_composerdashboard_warm_cache" instance="Corrivate\ComposerDashboard\Cron\WarmCache"
              method="execute">
-            <schedule>* * * * *</schedule>
+            <schedule>*/15 * * * *</schedule>
         </job>
         <job name="corrivate_composerdashboard_send_advisory_reminders"
              instance="Corrivate\ComposerDashboard\Cron\SendAdvisoryReminders" method="execute">
