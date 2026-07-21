@@ -47,10 +47,18 @@ class AuditIssues implements \Magento\Framework\Notification\MessageInterface
     public function getSeverity(): int
     {
         // What is the worst current issue?
-        $severity = (int)min(array_map(
+        $severities = array_map(
             fn (AuditIssue $a) => $a->severity,
             $this->composerCache->loadIssues() ?? []
-        ));
+        );
+
+        // min() throws a ValueError on an empty array in PHP 8. Magento only calls this
+        // after isDisplayed(), but the cache can be flushed between the two calls.
+        if ($severities === []) {
+            return MessageInterface::SEVERITY_NOTICE;
+        }
+
+        $severity = (int)min($severities);
 
         // Translate to Magento severity levels
         return match($severity) {

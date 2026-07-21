@@ -11,8 +11,8 @@ $parts = explode(' ', $block->getValue(), 2)
 
 ?>
 
-<span><?= $parts[0]?></span>
+<span><?= $escaper->escapeHtml($parts[0]) ?></span>
 <?php if(count($parts) == 2): ?>
 <br/>
-<span><?= $parts[1]?></span>
+<span><?= $escaper->escapeHtml($parts[1]) ?></span>
 <?php endif; ?>
