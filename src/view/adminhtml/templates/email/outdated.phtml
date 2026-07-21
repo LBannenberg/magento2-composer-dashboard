@@ -9,9 +9,9 @@ use Corrivate\ComposerDashboard\Model\Value\InstalledPackage;
 
 <?php foreach ($block->getOutdated() as $package): ?>
     <tr>
-        <td><?= $package->package ?></td>
-        <td style="text-align: right"><?= $package->version ?></td>
-        <td style="text-align: right"><?= $package->latest ?></td>
+        <td><?= $escaper->escapeHtml($package->package) ?></td>
+        <td style="text-align: right"><?= $escaper->escapeHtml($package->version) ?></td>
+        <td style="text-align: right"><?= $escaper->escapeHtml($package->latest) ?></td>
         <td style="text-align: right"><?= InstalledPackage::SEMVER_LABELS[$package->semver_status] ?? 'unknown' ?></td>
         <?php if($package->abandoned): ?>
             <td style="padding-left:10px;"><b>abandoned</b></td>

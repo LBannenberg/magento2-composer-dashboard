@@ -70,7 +70,10 @@ class Settings
     public function getIgnoredAdvisories(): array
     {
         $value = (string)$this->scopeConfig->getValue(self::XPATH_ADVISORY_IGNORED_PACKAGES);
-        $value = str_replace("\n", "", $value);
+        // Strip CR only: the field is a textarea documented as "Separate with newlines",
+        // and browsers submit CRLF. Stripping LF (as before) glued the whole list into
+        // a single entry, so no package was ever ignored.
+        $value = str_replace("\r", "", $value);
         $value = str_replace(",", "\n", $value);
         $items = explode("\n", $value);
         $items = array_map(fn ($item) => trim($item), $items);

@@ -1,7 +1,7 @@
 <?php
 
-/** @var \Corrivate\ComposerDashboard\Block\Adminhtml\Email\Advisories $block
- */
+/** @var \Corrivate\ComposerDashboard\Block\Adminhtml\Email\Advisories $block */
+/** @var \Magento\Framework\Escaper $escaper */
 
 use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
 
@@ -9,8 +9,8 @@ use Corrivate\ComposerDashboard\Model\Value\AuditIssue;
 
 <?php foreach ($block->getAdvisories() as $advisory): ?>
     <tr style="font-size:14px;">
-        <td><?= $advisory->package ?></td>
-        <td><?= $advisory->cve ?></td>
+        <td><?= $escaper->escapeHtml($advisory->package) ?></td>
+        <td><?= $escaper->escapeHtml($advisory->cve) ?></td>
         <?php if($advisory->severity >= AuditIssue::SEVERITY_MEDIUM): ?>
             <td><?= AuditIssue::SEVERITY_LABELS[$advisory->severity] ?></td>
         <?php else: ?>
