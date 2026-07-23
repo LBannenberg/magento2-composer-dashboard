@@ -16,7 +16,7 @@ class Audit implements AuditInterface
      * Composer contacts every configured repository; on a large installation that
      * takes minutes. Symfony's default timeout of 60 seconds is far too low.
      */
-    private const TIMEOUT = 900;
+    private const TIMEOUT = 180; // 3 minutes
 
     public function __construct(
         private readonly ComposerCache $cache,

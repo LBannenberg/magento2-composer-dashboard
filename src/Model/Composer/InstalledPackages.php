@@ -17,7 +17,7 @@ class InstalledPackages implements InstalledPackagesInterface
      * installation with ~690 packages across 15 repositories; the Symfony default of
      * 60s guarantees a ProcessTimedOutException there.
      */
-    private const TIMEOUT = 900;
+    private const TIMEOUT = 600; // 10m
 
     public function __construct(
         private readonly ComposerCache $cache,
