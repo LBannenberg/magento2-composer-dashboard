@@ -1,6 +1,6 @@
 # Changelog
 
-## Unversioned
+## 0.7.0
 ### Fixed
 * Hardened against composer failures and timeouts (@Maksold)
 * Fix CRLF causing getIgnoredAdvisories to fail (@Maksold)
