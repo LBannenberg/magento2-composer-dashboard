@@ -78,7 +78,7 @@ class Audit implements AuditInterface
                 $rows[] = new AuditIssue(
                     package: (string)$package,
                     title: (string)($issue['title'] ?? '(no title)'),
-                    cve: (string)($issue['cve'] ?? 'unknown'),
+                    cve: (string)($issue['cve'] ?? 'unknown'), // CVE can be null
                     link: (string)($issue['link'] ?? ''),
                     severity: $this->matchSeverity((string)($issue['severity'] ?? 'unknown')),
                     severity_original: (string)($issue['severity'] ?? 'unknown'),

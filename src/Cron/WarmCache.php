@@ -30,9 +30,9 @@ class WarmCache
         try {
             $this->audit->getRows();
             $this->installedPackages->getRows();
-        } catch (Throwable $e) {
-            $this->logger->error('Composer Dashboard cache warming failed: ' . $e->getMessage(), ['exception' => $e]);
-            throw $e;
+        } catch (Throwable $t) {
+            $this->logger->error('Composer Dashboard cache warming failed: ' . $t->getMessage(), ['throwable' => $t]);
+            throw $t;
         }
     }
 }
