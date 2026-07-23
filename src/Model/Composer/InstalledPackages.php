@@ -51,6 +51,7 @@ class InstalledPackages implements InstalledPackagesInterface
             '--no-interaction',
             '--no-plugins',
             '--no-scripts',
+            '--ignore-platform-req=php' // to ensure we really get to see the latest
         ]);
         $process->setWorkingDirectory(BP); // @phpstan-ignore constant.notFound
         $process->setTimeout(self::TIMEOUT);
