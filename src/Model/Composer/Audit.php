@@ -90,12 +90,9 @@ class Audit implements AuditInterface
         return $rows;
     }
 
-    /**
-     * `reportedAt` is absent from some advisory sources, and `cve` is explicitly null
-     * for GitHub-only advisories, so neither may be passed to DateTime unguarded.
-     */
     private function formatReportedAt(mixed $reportedAt): string
     {
+        // 'reportedAt is absent from some advisories
         if (!is_string($reportedAt) || $reportedAt === '') {
             return '';
         }
