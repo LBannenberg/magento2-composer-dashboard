@@ -1,8 +1,16 @@
 # Changelog
 
 ## Unversioned
+### Fixed
+* Hardened against composer failures and timeouts (@Maksold)
+* Fix CRLF causing getIgnoredAdvisories to fail (@Maksold)
+* ACL now enforced (@Maksold)
+* Various smaller fixes (@Maksold)
+* Removed some manual classes (@jissereitsma)
+
 ### Added
 * SECURITY.md
+* Added --ignore-platform-req=php so that you can see more possible upgrades
 
 ## 0.6.2
 ### Fixed
