@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1
+### Updated
+* Use newer version of loki/magento2-admin-components
+
 ## 0.7.0
 ### Fixed
 * Hardened against composer failures and timeouts (@Maksold)
